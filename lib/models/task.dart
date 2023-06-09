@@ -4,8 +4,15 @@ class TaskModel {
   String? description;
   DateTime? until;
   Priority priority;
+  bool isCompleted;
 
-  TaskModel({required this.id, required this.name, this.description, this.until, required this.priority});
+  TaskModel(
+      {required this.id,
+      required this.name,
+      this.description,
+      this.until,
+      this.priority = Priority.regular,
+      this.isCompleted = false});
 }
 
-enum Priority {low, regular, high, critical}
+enum Priority { low, regular, high, critical }

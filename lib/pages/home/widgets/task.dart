@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yss_todo/constants.dart';
+import 'package:yss_todo/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/models/task.dart';
 
@@ -36,7 +37,6 @@ class Task extends StatelessWidget {
           );
         },
         key: ValueKey<int>(task.id),
-        onDismissed: (DismissDirection direction) {},
         dismissThresholds: const {
           DismissDirection.endToStart: 0.3,
           DismissDirection.startToEnd: 0.3
@@ -45,7 +45,13 @@ class Task extends StatelessWidget {
           // return direction != DismissDirection.startToEnd;
           return false;
         },
+        onDismissed: (DismissDirection direction) {
+          runInAction(() => HomeController()
+              .taskList
+              .removeWhere((element) => element.id == task.id));
+        },
         child: ListTile(
+          visualDensity: const VisualDensity(horizontal: VisualDensity.minimumDensity),
           leading: Padding(
             padding: const EdgeInsets.all(appPadding / 2),
             child: Checkbox(
@@ -67,11 +73,8 @@ class Task extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (task.description != null)
-                Text(
-                  task.description!,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis
-                ),
+                Text(task.description!,
+                    maxLines: 3, overflow: TextOverflow.ellipsis),
               if (task.until != null) Text(task.until.toString())
             ],
           ),
@@ -79,7 +82,6 @@ class Task extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class DismisBackground extends StatelessWidget {

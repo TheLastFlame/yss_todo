@@ -20,8 +20,10 @@ class HomeAppBar extends StatelessWidget {
 
     scrollControl.addListener(
       () => runInAction(() => appBarExpandProcent.value =
-          scrollControl.offset > screenThird - 56 ? 100 : scrollControl.offset / (screenThird - 56) * 100),
-          //144 это expandedHeight - 56 (высота свёрнутого аппбара)
+          scrollControl.offset > screenThird - 56
+              ? 100
+              : scrollControl.offset / (screenThird - 56) * 100),
+      //144 это expandedHeight - 56 (высота свёрнутого аппбара)
     );
 
     return Observer(builder: (_) {
@@ -38,11 +40,10 @@ class HomeAppBar extends StatelessWidget {
             bottom:
                 lerp(appPadding * 5, appPadding * 2, appBarExpandProcent.value),
           ),
-          title: Container(
-              color: appBarExpandProcent.value == 100
-                  ? Colors.transparent
-                  : Theme.of(context).colorScheme.background,
-              child: Text(t.homepage.mytasks)),
+          title: Text(
+            t.homepage.mytasks,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           collapseMode: CollapseMode.pin,
           background: Align(
             alignment: Alignment.bottomCenter,
@@ -55,7 +56,11 @@ class HomeAppBar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(t.homepage.done),
+                  AnimatedOpacity(
+                    opacity: lerp(1, 0, appBarExpandProcent.value),
+                    duration: animationsDuration,
+                    child: Text(t.homepage.done),
+                  ),
                   Row(
                     children: [
                       isDoneVisibilitySwitcher(),
