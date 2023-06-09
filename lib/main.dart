@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:yss_todo/constants.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'i18n/strings.g.dart';
 
 void main() {
-  runApp(const MainApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  LocaleSettings.useDeviceLocale();
+  runApp(TranslationProvider(child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -12,11 +17,14 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
+      locale: TranslationProvider.of(context).flutterLocale, // use provider
+      supportedLocales: AppLocaleUtils.supportedLocales,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       home: Scaffold(
         body: CustomScrollView(
           slivers: [
-            const SliverAppBar(
-              title: Text('Text'),
+            SliverAppBar(
+              title: Text(t.homepage.mytasks),
             ),
             SliverToBoxAdapter(
               child: Padding(
