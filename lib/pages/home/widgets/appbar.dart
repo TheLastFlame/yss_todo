@@ -16,23 +16,25 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appBarExpandProcent = 0.0.obs();
+    final screenThird = MediaQuery.sizeOf(context).height / 3;
 
     scrollControl.addListener(
       () => runInAction(() => appBarExpandProcent.value =
-          scrollControl.offset >= 160 ? 100 : scrollControl.offset / 160 * 100),
+          scrollControl.offset > screenThird - 56 ? 100 : scrollControl.offset / (screenThird - 56) * 100),
+          //144 это expandedHeight - 56 (высота свёрнутого аппбара)
     );
 
     return Observer(builder: (_) {
       return SliverAppBar(
         pinned: true,
-        expandedHeight: 220,
+        expandedHeight: screenThird,
         actions: appBarExpandProcent.value == 100
             ? [isDoneVisibilitySwitcher()]
             : [settingsButton(appBarExpandProcent)],
         flexibleSpace: FlexibleSpaceBar(
           titlePadding: EdgeInsets.only(
             left:
-                lerp(appPadding * 6, appPadding * 2, appBarExpandProcent.value),
+                lerp(appPadding * 5, appPadding * 2, appBarExpandProcent.value),
             bottom:
                 lerp(appPadding * 5, appPadding * 2, appBarExpandProcent.value),
           ),
@@ -46,9 +48,9 @@ class HomeAppBar extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.only(
-                  left: lerp(appPadding * 6, appPadding * 2,
+                  left: lerp(appPadding * 5, appPadding * 2,
                       appBarExpandProcent.value),
-                  right: lerp(appPadding * 4, 0, appBarExpandProcent.value),
+                  right: lerp(appPadding * 3, 0, appBarExpandProcent.value),
                   bottom: appPadding),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,8 +84,8 @@ class HomeAppBar extends StatelessWidget {
                 const BorderRadius.only(bottomLeft: Radius.circular(90)),
             onTap: () {},
             child: const SizedBox(
-              height: 60,
-              width: 60,
+              height: 56,
+              width: 56,
               child: Padding(
                 padding:
                     EdgeInsets.only(bottom: appPadding, left: appPadding * 2),
