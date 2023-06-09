@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yss_todo/constants.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:yss_todo/pages/home/home.dart';
 
@@ -17,6 +16,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
       locale: TranslationProvider.of(context).flutterLocale, // use provider
