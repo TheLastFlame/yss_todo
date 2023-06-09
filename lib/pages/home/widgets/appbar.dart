@@ -28,6 +28,7 @@ class HomeAppBar extends StatelessWidget {
 
     return Observer(builder: (_) {
       return SliverAppBar(
+        shadowColor: Theme.of(context).colorScheme.shadow,
         pinned: true,
         expandedHeight: screenThird,
         actions: appBarExpandProcent.value == 100

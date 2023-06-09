@@ -1,5 +1,6 @@
 save: Save
 until: Due date
+until_short: Until
 
 priority: Priority
 low: Low

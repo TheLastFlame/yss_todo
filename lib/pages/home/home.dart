@@ -48,7 +48,7 @@ class Homepage extends StatelessWidget {
           Timer(const Duration(milliseconds: 250), () {
             scrollControl.animateTo(
                 scrollControl.position.maxScrollExtent,
-                curve: Curves.bounceIn,
+                curve: Curves.easeIn,
                 duration: animationsDuration);
           });
         },

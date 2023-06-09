@@ -1,9 +1,9 @@
 /// Generated file. Do not edit.
 ///
 /// Locales: 2
-/// Strings: 20 (10 per locale)
+/// Strings: 22 (11 per locale)
 ///
-/// Built on 2023-06-09 at 10:02 UTC
+/// Built on 2023-06-09 at 22:49 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -172,6 +172,7 @@ class _StringsTaskpageEn {
 	// Translations
 	String get save => 'Save';
 	String get until => 'Due date';
+	String get until_short => 'Until';
 	String get priority => 'Priority';
 	String get low => 'Low';
 	String get regular => 'Regular';
@@ -229,6 +230,7 @@ class _StringsTaskpageRu implements _StringsTaskpageEn {
 	// Translations
 	@override String get save => 'Сохранить';
 	@override String get until => 'Срок выполнения';
+	@override String get until_short => 'До';
 	@override String get priority => 'Приоритет';
 	@override String get low => 'Низкий';
 	@override String get regular => 'Обычный';
@@ -247,6 +249,7 @@ extension on _StringsEn {
 			case 'homepage.newtask': return 'New task';
 			case 'taskpage.save': return 'Save';
 			case 'taskpage.until': return 'Due date';
+			case 'taskpage.until_short': return 'Until';
 			case 'taskpage.priority': return 'Priority';
 			case 'taskpage.low': return 'Low';
 			case 'taskpage.regular': return 'Regular';
@@ -265,6 +268,7 @@ extension on _StringsRu {
 			case 'homepage.newtask': return 'Добавить';
 			case 'taskpage.save': return 'Сохранить';
 			case 'taskpage.until': return 'Срок выполнения';
+			case 'taskpage.until_short': return 'До';
 			case 'taskpage.priority': return 'Приоритет';
 			case 'taskpage.low': return 'Низкий';
 			case 'taskpage.regular': return 'Обычный';

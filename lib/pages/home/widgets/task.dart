@@ -8,6 +8,10 @@ import 'package:yss_todo/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/models/task.dart';
 
+import '../../../i18n/strings.g.dart';
+
+import 'package:intl/intl.dart';
+
 class Task extends StatelessWidget {
   const Task(this.task, {super.key});
   final TaskModel task;
@@ -51,7 +55,9 @@ class Task extends StatelessWidget {
               .removeWhere((element) => element.id == task.id));
         },
         child: ListTile(
-          visualDensity: const VisualDensity(horizontal: VisualDensity.minimumDensity),
+          visualDensity: const VisualDensity(
+              horizontal: VisualDensity.minimumDensity,
+              vertical: VisualDensity.minimumDensity),
           leading: Padding(
             padding: const EdgeInsets.all(appPadding / 2),
             child: Checkbox(
@@ -59,23 +65,40 @@ class Task extends StatelessWidget {
               value: true,
             ),
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: appPadding),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: appPadding, vertical: 0),
           trailing: IconButton(
             onPressed: () {},
             icon: const Icon(Icons.info_outline),
           ),
-          title: Text(
-            task.name,
-            overflow: TextOverflow.ellipsis,
+          title: Padding(
+            padding: const EdgeInsets.only(top: appPadding),
+            child: Text(
+              task.name,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           isThreeLine: task.description != null || task.until != null,
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (task.description != null)
-                Text(task.description!,
-                    maxLines: 3, overflow: TextOverflow.ellipsis),
-              if (task.until != null) Text(task.until.toString())
+                Text(
+                  task.description!,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withOpacity(0.7)),
+                ),
+              if (task.until != null)
+                Text(
+                  '${t.taskpage.until_short}: ${DateFormat.yMMMMd().add_Hm().format(task.until!)}',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
             ],
           ),
         ),
