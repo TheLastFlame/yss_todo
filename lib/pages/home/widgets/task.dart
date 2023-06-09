@@ -15,13 +15,13 @@ class Task extends StatelessWidget {
     var iconBoxSize = 0.0.obs();
     return ClipRRect(
       child: Dismissible(
-        background: dismisBackground(
+        background: DismisBackground(
           iconBoxSize: iconBoxSize,
           icon: Icons.done,
           color: Colors.green,
           alignment: Alignment.centerLeft,
         ),
-        secondaryBackground: dismisBackground(
+        secondaryBackground: DismisBackground(
           iconBoxSize: iconBoxSize,
           icon: Icons.delete,
           color: Colors.red,
@@ -82,8 +82,8 @@ class Task extends StatelessWidget {
 
 }
 
-class dismisBackground extends StatelessWidget {
-  const dismisBackground({
+class DismisBackground extends StatelessWidget {
+  const DismisBackground({
     super.key,
     required this.iconBoxSize,
     required this.color,
