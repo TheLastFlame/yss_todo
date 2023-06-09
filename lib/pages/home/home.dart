@@ -20,12 +20,15 @@ class Homepage extends StatelessWidget {
               padding: const EdgeInsets.all(appPadding),
               child: Card(
                 elevation: 2,
-                child: Column(
-                  children: List.generate(
-                    10,
-                    (index) => Task(
-                      task: TaskModel(
-                          id: 1, name: 'Test', priority: Priority.regular),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: appPadding),
+                  child: Column(
+                    children: List.generate(
+                      100,
+                      (index) => Task(
+                        TaskModel(
+                            id: 1, name: 'Test', description: 'очень много много мяса. хе хе хе хе хе fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', until: DateTime.now(), priority: Priority.regular),
+                      ),
                     ),
                   ),
                 ),

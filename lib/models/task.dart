@@ -1,8 +1,11 @@
-class Task {
-  late String name;
+class TaskModel {
+  int id;
+  String name;
   String? description;
   DateTime? until;
-  late Priority priority;
+  Priority priority;
+
+  TaskModel({required this.id, required this.name, this.description, this.until, required this.priority});
 }
 
 enum Priority {low, regular, high, critical}
