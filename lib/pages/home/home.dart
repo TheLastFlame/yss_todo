@@ -24,7 +24,7 @@ class Homepage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: appPadding),
                   child: Column(
                     children: List.generate(
-                      100,
+                      10,
                       (index) => Task(
                         TaskModel(
                             id: 1, name: 'Test', description: 'очень много много мяса. хе хе хе хе хе fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', until: DateTime.now(), priority: Priority.regular),
@@ -35,6 +35,8 @@ class Homepage extends StatelessWidget {
               ),
             ),
           ),
+          //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
+          const SliverToBoxAdapter(child: SizedBox(height: 80),)
         ],
       ),
       floatingActionButton: FloatingActionButton(
