@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yss_todo/constants.dart';
+import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/pages/home/widgets/appbar.dart';
 import 'package:yss_todo/pages/home/widgets/tasklist.dart';
-import '../task/taskinfo.dart';
-
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -16,7 +14,7 @@ class Homepage extends StatelessWidget {
         controller: scrollControl,
         slivers: [
           HomeAppBar(scrollControl: scrollControl),
-          const TaskList(),
+          TaskList(scrollControl: scrollControl),
           //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
           const SliverToBoxAdapter(
             child: SizedBox(height: 102),
@@ -24,50 +22,7 @@ class Homepage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          scrollControl
-              .animateTo(scrollControl.position.maxScrollExtent,
-                  curve: Curves.easeIn, duration: animationsDuration)
-              .then(
-                (value) => showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  isScrollControlled: true,
-                  builder: (context) {
-                    return SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            height: appPadding * 2,
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.background,
-                                borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(16))),
-                          ),
-                          const TaskPage(),
-                          SizedBox(
-                            height: MediaQuery.viewInsetsOf(context).bottom,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              );
-
-          // runInAction(() => GetIt.I<HomeController>().taskList.add(
-          //       TaskModel(
-          //           name: 'Test',
-          //           description: 'очень много много мяса',
-          //           // until: DateTime.now(),
-          //           priority: Priority.regular),
-          //     ));
-          // Timer(const Duration(milliseconds: 250), () {
-          //   scrollControl.animateTo(scrollControl.position.maxScrollExtent,
-          //       curve: Curves.easeIn, duration: animationsDuration);
-          // });
-        },
+        onPressed: () => taskCreatingDialog(context, scrollControl),
         child: const Icon(Icons.add),
       ),
     );

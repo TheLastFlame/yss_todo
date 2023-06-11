@@ -73,9 +73,11 @@ class Task extends StatelessWidget {
               // return false;
             },
             onDismissed: (DismissDirection direction) {
-              runInAction(() => GetIt.I<HomeController>()
-                  .taskList
-                  .removeWhere((element) => element.id == task.id));
+              if (direction != DismissDirection.startToEnd) {
+                runInAction(() => GetIt.I<HomeController>()
+                    .taskList
+                    .removeWhere((element) => element.id == task.id));
+              }
             },
             child: ListTile(
               shape: first

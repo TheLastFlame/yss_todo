@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:yss_todo/pages/home/widgets/task.dart';
 
 import '../../../constants.dart';
 import '../../../controllers/home.dart';
+import '../../../helpers.dart';
 import '../../../i18n/strings.g.dart';
 
-import 'package:collection/collection.dart';
-
 class TaskList extends StatelessWidget {
-  const TaskList({
-    super.key,
-  });
+  const TaskList({super.key, required this.scrollControl});
+
+  final ScrollController scrollControl;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +27,11 @@ class TaskList extends StatelessWidget {
                 ? const EdgeInsets.symmetric(vertical: appPadding)
                 : EdgeInsets.zero,
             child: Observer(builder: (_) {
+              var list = Computed(() => controller.taskList
+                  .where((el) =>
+                      controller.isComplitedVisible.value ||
+                      !el.isCompleted.value)
+                  .toList());
               return Column(
                 children: [
                   AnimatedSize(
@@ -36,24 +41,15 @@ class TaskList extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.taskList.length,
-                      itemBuilder: (context, index) {
-                        var task = controller.taskList[index];
-                        return !task.isCompleted.value ||
-                                controller.isComplitedVisible.value
-                            ? Task(
-                                task,
-                                first: index == 0,
-                                last: index == controller.taskList.length,
-                              )
-                            : const SizedBox.shrink();
-                      },
+                      itemCount: list.value.length,
+                      itemBuilder: (context, index) => Task(
+                        list.value[index],
+                        first: index == 0,
+                        last: index == list.value.length-1,
+                      ),
                     ),
                   ),
-                  if (controller.taskList.firstWhereOrNull((el) =>
-                          controller.isComplitedVisible.value ||
-                          el.isCompleted.value == false) !=
-                      null)
+                  if (list.value.isNotEmpty)
                     const Divider(
                       height: 0,
                     ),
@@ -62,7 +58,7 @@ class TaskList extends StatelessWidget {
                         top: Radius.circular(
                             controller.taskList.isEmpty ? 13 : 0),
                         bottom: const Radius.circular(13)),
-                    onTap: () {},
+                    onTap: () => taskCreatingDialog(context, scrollControl),
                     child: ListTile(
                         visualDensity: const VisualDensity(
                             horizontal: VisualDensity.minimumDensity),
