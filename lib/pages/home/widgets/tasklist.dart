@@ -7,6 +7,8 @@ import '../../../constants.dart';
 import '../../../controllers/home.dart';
 import '../../../i18n/strings.g.dart';
 
+import 'package:collection/collection.dart';
+
 class TaskList extends StatelessWidget {
   const TaskList({
     super.key,
@@ -36,11 +38,22 @@ class TaskList extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: controller.taskList.length,
                       itemBuilder: (context, index) {
-                        return Task(controller.taskList[index], index: index);
+                        var task = controller.taskList[index];
+                        return !task.isCompleted.value ||
+                                controller.isComplitedVisible.value
+                            ? Task(
+                                task,
+                                first: index == 0,
+                                last: index == controller.taskList.length,
+                              )
+                            : const SizedBox.shrink();
                       },
                     ),
                   ),
-                  if (controller.taskList.isNotEmpty)
+                  if (controller.taskList.firstWhereOrNull((el) =>
+                          controller.isComplitedVisible.value ||
+                          el.isCompleted.value == false) !=
+                      null)
                     const Divider(
                       height: 0,
                     ),

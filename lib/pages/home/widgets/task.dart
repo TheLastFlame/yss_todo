@@ -15,14 +15,14 @@ import '../../../i18n/strings.g.dart';
 import 'package:intl/intl.dart';
 
 class Task extends StatelessWidget {
-  const Task(this.task, {super.key, required this.index});
+  const Task(this.task, {super.key, this.first = false, this.last = false});
   final TaskModel task;
-  final int index;
+  final bool first, last;
   @override
   Widget build(BuildContext context) {
     var iconBoxSize = 0.0.obs();
     return ClipRRect(
-      borderRadius: index == 0
+      borderRadius: first
           ? const BorderRadius.vertical(
               top: Radius.circular(13),
             )
@@ -66,9 +66,8 @@ class Task extends StatelessWidget {
             },
             confirmDismiss: (direction) async {
               if (direction == DismissDirection.startToEnd) {
-                Timer(animationsDuration,
-                    () => runInAction(() => task.isCompleted.toggle()));
-                return GetIt.I<HomeController>().isComplitedVisible.value;
+                Timer(animationsDuration, () => task.isCompleted.toggle());
+                return !GetIt.I<HomeController>().isComplitedVisible.value;
               }
               return true;
               // return false;
@@ -79,7 +78,7 @@ class Task extends StatelessWidget {
                   .removeWhere((element) => element.id == task.id));
             },
             child: ListTile(
-              shape: index == 0
+              shape: first
                   ? const RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(13)))
@@ -100,9 +99,7 @@ class Task extends StatelessWidget {
               contentPadding: EdgeInsets.only(
                   left: appPadding,
                   right: appPadding,
-                  bottom: index == GetIt.I<HomeController>().taskList.length - 1
-                      ? appPadding
-                      : 0),
+                  bottom: last ? appPadding : 0),
               trailing: IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.info_outline),
@@ -115,7 +112,8 @@ class Task extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              isThreeLine: task.description.value != null || task.dueDate.value != null,
+              isThreeLine:
+                  task.description.value != null || task.dueDate.value != null,
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:yss_todo/controllers/home.dart';
 
 import '../../../constants.dart';
 import '../../../helpers.dart';
@@ -102,6 +104,10 @@ class HomeAppBar extends StatelessWidget {
     );
   }
 
-  IconButton isDoneVisibilitySwitcher() =>
-      IconButton(onPressed: () {}, icon: const Icon(Icons.visibility));
+  IconButton isDoneVisibilitySwitcher() => IconButton(
+      onPressed: () => runInAction(
+          () => GetIt.I<HomeController>().isComplitedVisible.toggle()),
+      icon: Icon(GetIt.I<HomeController>().isComplitedVisible.value
+          ? Icons.visibility
+          : Icons.visibility_off));
 }
