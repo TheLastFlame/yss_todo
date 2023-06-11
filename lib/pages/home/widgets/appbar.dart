@@ -62,7 +62,8 @@ class HomeAppBar extends StatelessWidget {
                   AnimatedOpacity(
                     opacity: lerp(1, 0, appBarExpandProcent.value),
                     duration: animationsDuration,
-                    child: Text(t.homepage.done),
+                    child: Text(
+                        '${t.homepage.done}: ${GetIt.I<HomeController>().taskList.where((e) => e.isCompleted.value).length}'),
                   ),
                   Row(
                     children: [
