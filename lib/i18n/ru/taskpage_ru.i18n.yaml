@@ -1,3 +1,8 @@
+task: Задача
+
+name: Название
+description: Описание
+
 save: Сохранить
 until: Срок выполнения
 until_short: До
@@ -7,3 +12,5 @@ low: Низкий
 regular: Обычный
 hight: Высокий
 critical: Критический
+
+delete: Удалить

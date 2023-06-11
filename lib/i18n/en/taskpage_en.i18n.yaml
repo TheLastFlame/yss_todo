@@ -1,3 +1,8 @@
+task: Task
+
+name: Task name
+description: Description
+
 save: Save
 until: Due date
 until_short: Until
@@ -7,3 +12,5 @@ low: Low
 regular: Regular
 hight: Hight
 critical: Critical
+
+delete: Delete

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
+import 'package:yss_todo/controllers/home.dart';
 import 'package:yss_todo/pages/home/home.dart';
+import 'package:yss_todo/pages/task/taskinfo.dart';
 
 import 'i18n/strings.g.dart';
 
@@ -9,6 +12,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   LocaleSettings.useDeviceLocale();
   settingUpSystemUIOverlay();
+
+  GetIt.I.registerSingleton<HomeController>(HomeController());
+
   runApp(TranslationProvider(child: const MainApp()));
 }
 
@@ -37,6 +43,8 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Homepage(),
+        '/task': (context) => const TaskPage(),
+
       },
     );
   }

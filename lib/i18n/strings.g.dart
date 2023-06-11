@@ -1,9 +1,9 @@
 /// Generated file. Do not edit.
 ///
 /// Locales: 2
-/// Strings: 22 (11 per locale)
+/// Strings: 36 (18 per locale)
 ///
-/// Built on 2023-06-09 at 22:49 UTC
+/// Built on 2023-06-11 at 13:58 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -147,8 +147,21 @@ class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
 	late final _StringsEn _root = this; // ignore: unused_field
 
 	// Translations
+	late final _StringsCommonwordsEn commonwords = _StringsCommonwordsEn._(_root);
 	late final _StringsHomepageEn homepage = _StringsHomepageEn._(_root);
 	late final _StringsTaskpageEn taskpage = _StringsTaskpageEn._(_root);
+}
+
+// Path: commonwords
+class _StringsCommonwordsEn {
+	_StringsCommonwordsEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get confirmation => 'Are you sure?';
+	String get confirm => 'Confirm';
+	String get cancel => 'Cancel';
 }
 
 // Path: homepage
@@ -170,6 +183,9 @@ class _StringsTaskpageEn {
 	final _StringsEn _root; // ignore: unused_field
 
 	// Translations
+	String get task => 'Task';
+	String get name => 'Task name';
+	String get description => 'Description';
 	String get save => 'Save';
 	String get until => 'Due date';
 	String get until_short => 'Until';
@@ -178,6 +194,7 @@ class _StringsTaskpageEn {
 	String get regular => 'Regular';
 	String get hight => 'Hight';
 	String get critical => 'Critical';
+	String get delete => 'Delete';
 }
 
 // Path: <root>
@@ -205,8 +222,21 @@ class _StringsRu implements _StringsEn {
 	@override late final _StringsRu _root = this; // ignore: unused_field
 
 	// Translations
+	@override late final _StringsCommonwordsRu commonwords = _StringsCommonwordsRu._(_root);
 	@override late final _StringsHomepageRu homepage = _StringsHomepageRu._(_root);
 	@override late final _StringsTaskpageRu taskpage = _StringsTaskpageRu._(_root);
+}
+
+// Path: commonwords
+class _StringsCommonwordsRu implements _StringsCommonwordsEn {
+	_StringsCommonwordsRu._(this._root);
+
+	@override final _StringsRu _root; // ignore: unused_field
+
+	// Translations
+	@override String get confirmation => 'Вы уверены?';
+	@override String get confirm => 'Подтвердить';
+	@override String get cancel => 'Отмена';
 }
 
 // Path: homepage
@@ -228,6 +258,9 @@ class _StringsTaskpageRu implements _StringsTaskpageEn {
 	@override final _StringsRu _root; // ignore: unused_field
 
 	// Translations
+	@override String get task => 'Задача';
+	@override String get name => 'Название';
+	@override String get description => 'Описание';
 	@override String get save => 'Сохранить';
 	@override String get until => 'Срок выполнения';
 	@override String get until_short => 'До';
@@ -236,6 +269,7 @@ class _StringsTaskpageRu implements _StringsTaskpageEn {
 	@override String get regular => 'Обычный';
 	@override String get hight => 'Высокий';
 	@override String get critical => 'Критический';
+	@override String get delete => 'Удалить';
 }
 
 /// Flat map(s) containing all translations.
@@ -244,9 +278,15 @@ class _StringsTaskpageRu implements _StringsTaskpageEn {
 extension on _StringsEn {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
+			case 'commonwords.confirmation': return 'Are you sure?';
+			case 'commonwords.confirm': return 'Confirm';
+			case 'commonwords.cancel': return 'Cancel';
 			case 'homepage.mytasks': return 'My tasks';
 			case 'homepage.done': return 'Is done';
 			case 'homepage.newtask': return 'New task';
+			case 'taskpage.task': return 'Task';
+			case 'taskpage.name': return 'Task name';
+			case 'taskpage.description': return 'Description';
 			case 'taskpage.save': return 'Save';
 			case 'taskpage.until': return 'Due date';
 			case 'taskpage.until_short': return 'Until';
@@ -255,6 +295,7 @@ extension on _StringsEn {
 			case 'taskpage.regular': return 'Regular';
 			case 'taskpage.hight': return 'Hight';
 			case 'taskpage.critical': return 'Critical';
+			case 'taskpage.delete': return 'Delete';
 			default: return null;
 		}
 	}
@@ -263,9 +304,15 @@ extension on _StringsEn {
 extension on _StringsRu {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
+			case 'commonwords.confirmation': return 'Вы уверены?';
+			case 'commonwords.confirm': return 'Подтвердить';
+			case 'commonwords.cancel': return 'Отмена';
 			case 'homepage.mytasks': return 'Мои тёмные делишки';
 			case 'homepage.done': return 'Выполнено';
 			case 'homepage.newtask': return 'Добавить';
+			case 'taskpage.task': return 'Задача';
+			case 'taskpage.name': return 'Название';
+			case 'taskpage.description': return 'Описание';
 			case 'taskpage.save': return 'Сохранить';
 			case 'taskpage.until': return 'Срок выполнения';
 			case 'taskpage.until_short': return 'До';
@@ -274,6 +321,7 @@ extension on _StringsRu {
 			case 'taskpage.regular': return 'Обычный';
 			case 'taskpage.hight': return 'Высокий';
 			case 'taskpage.critical': return 'Критический';
+			case 'taskpage.delete': return 'Удалить';
 			default: return null;
 		}
 	}

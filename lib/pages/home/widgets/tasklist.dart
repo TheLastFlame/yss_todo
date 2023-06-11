@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:yss_todo/pages/home/widgets/task.dart';
 
 import '../../../constants.dart';
@@ -9,13 +10,11 @@ import '../../../i18n/strings.g.dart';
 class TaskList extends StatelessWidget {
   const TaskList({
     super.key,
-    required this.controller,
   });
-
-  final HomeController controller;
 
   @override
   Widget build(BuildContext context) {
+    var controller = GetIt.I<HomeController>();
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.all(appPadding),
@@ -31,20 +30,19 @@ class TaskList extends StatelessWidget {
                   AnimatedSize(
                     alignment: Alignment.topCenter,
                     duration: animationsDuration,
-                    child: ListView(
+                    child: ListView.builder(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      children: controller.taskList
-                          .map(
-                            (element) => Task(element),
-                          )
-                          .toList(),
+                      itemCount: controller.taskList.length,
+                      itemBuilder: (context, index) {
+                        return Task(controller.taskList[index], index: index);
+                      },
                     ),
                   ),
                   if (controller.taskList.isNotEmpty)
                     const Divider(
-                      height: appPadding,
+                      height: 0,
                     ),
                   InkWell(
                     borderRadius: BorderRadius.vertical(
@@ -58,7 +56,7 @@ class TaskList extends StatelessWidget {
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: appPadding),
                         leading: const Padding(
-                          padding: EdgeInsets.all(appPadding*1.5),
+                          padding: EdgeInsets.all(appPadding * 2),
                           child: Icon(Icons.add),
                         ),
                         title: Text(t.homepage.newtask)),
