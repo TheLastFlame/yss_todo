@@ -68,9 +68,9 @@ class Task extends StatelessWidget {
               if (direction == DismissDirection.startToEnd) {
                 Timer(animationsDuration, () => task.isCompleted.toggle());
                 return !GetIt.I<HomeController>().isComplitedVisible.value;
+              } else {
+                return confirm(context);
               }
-              return true;
-              // return false;
             },
             onDismissed: (DismissDirection direction) {
               if (direction != DismissDirection.startToEnd) {
@@ -111,7 +111,18 @@ class Task extends StatelessWidget {
                 child: Text(
                   task.name.value ?? '',
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    decoration: task.isCompleted.value
+                        ? TextDecoration.lineThrough
+                        : null,
+                    color: task.isCompleted.value
+                        ? Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(0.6)
+                        : null,
+                  ),
                 ),
               ),
               isThreeLine:
@@ -133,7 +144,6 @@ class Task extends StatelessWidget {
                   if (task.dueDate.value != null)
                     Text(
                       '${t.taskpage.until_short}: ${DateFormat.yMMMMd().format(task.dueDate.value!)}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                 ],
               ),

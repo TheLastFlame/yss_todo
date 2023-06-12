@@ -17,7 +17,10 @@ Future<bool> confirm(context) async {
           child: Text(t.commonwords.cancel),
         ),
         TextButton(
-          onPressed: () => result = true,
+          onPressed: () {
+            result = true;
+            Navigator.of(context).pop();
+          },
           child: Text(t.commonwords.confirm),
         ),
       ],

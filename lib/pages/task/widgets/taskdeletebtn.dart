@@ -25,7 +25,7 @@ class TaskDeleteButton extends StatelessWidget {
             GetIt.I<HomeController>()
                 .taskList
                 .removeWhere((element) => element.id == model.id);
-            Navigator.of(context).popAndPushNamed('/task');
+            Navigator.of(context).popAndPushNamed('/');
           }
         },
       ),
