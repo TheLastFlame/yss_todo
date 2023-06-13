@@ -47,6 +47,7 @@ void taskCreatingDialog(context) {
         context: context,
         useSafeArea: true,
         isScrollControlled: true,
+        backgroundColor: Theme.of(context).colorScheme.background,
         builder: (context) {
           return Column(
             mainAxisSize: MainAxisSize.min,
