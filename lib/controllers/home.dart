@@ -20,7 +20,7 @@ class HomeController {
   }
 
   void removeTask(id) {
-    runInAction(() => taskList.removeWhere((element) => element.id == id));
+    Timer(animationsDuration, () => taskList.removeWhere((element) => element.id == id));
     _taskStorage.remove(id.toString());
   }
 

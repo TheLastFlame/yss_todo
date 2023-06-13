@@ -18,20 +18,21 @@ class TaskDeleteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: appPadding, vertical: appPadding),
+      padding: const EdgeInsets.symmetric(
+          horizontal: appPadding, vertical: appPadding),
       child: InkWell(
         borderRadius: BorderRadius.circular(13),
         onTap: () => confirm(context).then(
           (value) {
             if (value) {
-              GetIt.I<HomeController>().removeTask(model);
-              Navigator.of(context).pushReplacementNamed('/');
+              Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
+              GetIt.I<HomeController>().removeTask(model.id);
             }
           },
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              vertical: appPadding * 3, horizontal: appPadding*1.5),
+              vertical: appPadding * 3, horizontal: appPadding * 1.5),
           child: Row(
             children: [
               const Icon(
