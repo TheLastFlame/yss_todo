@@ -39,23 +39,21 @@ void taskCreatingDialog(context, scrollControl) {
           useSafeArea: true,
           isScrollControlled: true,
           builder: (context) {
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: appPadding * 2,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.background,
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(16))),
-                  ),
-                  const TaskPage(),
-                  SizedBox(
-                    height: MediaQuery.viewInsetsOf(context).bottom,
-                  ),
-                ],
-              ),
+            return ListView(
+              shrinkWrap: true,
+              children: [
+                Container(
+                  height: appPadding * 2,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.background,
+                      borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(16))),
+                ),
+                const TaskPage(),
+                SizedBox(
+                  height: MediaQuery.viewInsetsOf(context).bottom,
+                ),
+              ],
             );
           },
         ),

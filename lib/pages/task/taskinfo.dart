@@ -28,45 +28,56 @@ class TaskPage extends StatelessWidget {
     var controller = TaskController(task);
 
     return Material(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TaskAppBar(controller: controller),
-          Card(
-            margin: const EdgeInsets.all(appPadding * 2),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: appPadding * 2),
-              child: TextField(
-                controller: controller.nameControl,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: t.taskpage.name,
-                ),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TaskAppBar(controller: controller),
+            Flexible(
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  Card(
+                    margin: const EdgeInsets.all(appPadding * 2),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: appPadding * 2),
+                      child: TextField(
+                        controller: controller.nameControl,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: t.taskpage.name,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Card(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: appPadding * 2),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: appPadding * 2),
+                      child: TextField(
+                        controller: controller.descriptionControl,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: t.taskpage.description,
+                        ),
+                        minLines: 5,
+                        maxLines: null,
+                      ),
+                    ),
+                  ),
+                  PrioritySwitcher(controller: controller),
+                  const Divider(height: 0),
+                  DueDatePicker(controller: controller),
+                  if (id != null) const Divider(height: 0),
+                  if (id != null) TaskDeleteButton(model: task),
+                ],
               ),
             ),
-          ),
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: appPadding * 2),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: appPadding * 2),
-              child: TextField(
-                controller: controller.descriptionControl,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: t.taskpage.description,
-                ),
-                minLines: 5,
-                maxLines: null,
-              ),
-            ),
-          ),
-          PrioritySwitcher(controller: controller),
-          const Divider(height: 0),
-          DueDatePicker(controller: controller),
-          if (id != null) const Divider(height: 0),
-          if (id != null) TaskDeleteButton(model: task),
-        ],
+          ],
+        ),
       ),
     );
   }
