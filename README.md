@@ -1,5 +1,10 @@
-![Logo](https://raw.githubusercontent.com/TheLastFlame/yss_todo/main/assets/img/yssBanner.png)
-# YSS ToDo
+<a href="https://ysstodo.pages.dev">
+  <h1 align="center">
+    <picture>
+      <img alt="YSS ToDo" src="https://raw.githubusercontent.com/TheLastFlame/yss_todo/main/assets/img/yssBanner.png">
+    </picture>
+  </h1>
+</a>
 
 Простое ToDo приложение, создаваемое в рамках летней школы Яндекса.
 
