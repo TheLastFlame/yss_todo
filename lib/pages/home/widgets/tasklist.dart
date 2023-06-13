@@ -51,7 +51,7 @@ class TaskList extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                           top: Radius.circular(
-                              controller.taskList.isEmpty ? 13 : 0),
+                              list.value.isEmpty ? 13 : 0),
                           bottom: const Radius.circular(13)),
                     ),
                     onTap: () => taskCreatingDialog(context),
