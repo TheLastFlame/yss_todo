@@ -51,13 +51,12 @@ class Task extends StatelessWidget {
               alignment: Alignment.centerRight,
             ),
             onUpdate: (details) {
-              //Шикарное точечное позиционирование иконки в пространстве
               runInAction(
                 () => iconBoxSize.value = lerp(
                         0,
-                        MediaQuery.sizeOf(context).width,
+                        MediaQuery.sizeOf(context).width - appPadding * 4,
                         details.progress * 100) -
-                    2,
+                    appPadding * 2,
               );
             },
             key: task.id,
@@ -67,7 +66,8 @@ class Task extends StatelessWidget {
             },
             confirmDismiss: (direction) async {
               if (direction == DismissDirection.startToEnd) {
-                Timer(animationsDuration, () => controller.changeTaskStatus(task));
+                Timer(animationsDuration,
+                    () => controller.changeTaskStatus(task));
                 return !controller.isComplitedVisible.value;
               } else {
                 return confirm(context);
@@ -78,77 +78,93 @@ class Task extends StatelessWidget {
                 controller.removeTask(task.id);
               }
             },
-            child: ListTile(
-              shape: first
-                  ? const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(13)))
-                  : null,
-              onTap: () => Navigator.of(context)
-                  .pushNamed('/task', arguments: {'id': task.id}),
-              visualDensity: const VisualDensity(horizontal: -4),
-              leading: Padding(
-                padding: const EdgeInsets.all(appPadding / 2),
-                child: Observer(builder: (_) {
-                  return Checkbox(
-                    onChanged: (val) =>
-                        runInAction(() => controller.changeTaskStatus(task)),
-                    value: task.isCompleted.value,
-                  );
-                }),
-              ),
-              contentPadding: EdgeInsets.only(
-                  left: appPadding,
-                  right: appPadding,
-                  bottom: last ? appPadding : 0),
-              trailing: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.info_outline),
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(top: appPadding),
-                child: Text(
-                  task.name.value ?? '',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    decoration: task.isCompleted.value
-                        ? TextDecoration.lineThrough
-                        : null,
-                    color: task.isCompleted.value
-                        ? Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(0.6)
-                        : null,
-                  ),
-                ),
-              ),
-              isThreeLine:
-                  task.description.value != null || task.dueDate.value != null,
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (task.description.value != null)
-                    Text(
-                      task.description.value!,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onBackground
-                              .withOpacity(0.7)),
-                    ),
-                  if (task.dueDate.value != null)
-                    Text(
-                      '${t.taskpage.until_short}: ${DateFormat.yMMMMd().format(task.dueDate.value!)}',
-                    ),
-                ],
-              ),
-            ),
+            child: TaskTile(
+                first: first, task: task, controller: controller, last: last),
           );
         },
+      ),
+    );
+  }
+}
+
+class TaskTile extends StatelessWidget {
+  const TaskTile({
+    super.key,
+    required this.first,
+    required this.task,
+    required this.controller,
+    required this.last,
+  });
+
+  final bool first;
+  final TaskModel task;
+  final HomeController controller;
+  final bool last;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      shape: first
+          ? const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(13)))
+          : null,
+      onTap: () =>
+          Navigator.of(context).pushNamed('/task', arguments: {'id': task.id}),
+      visualDensity: const VisualDensity(horizontal: -4),
+      leading: Padding(
+        padding: const EdgeInsets.all(appPadding / 2),
+        child: Observer(builder: (_) {
+          return Checkbox(
+            onChanged: (val) =>
+                runInAction(() => controller.changeTaskStatus(task)),
+            value: task.isCompleted.value,
+          );
+        }),
+      ),
+      contentPadding: EdgeInsets.only(
+          left: appPadding, right: appPadding, bottom: last ? appPadding : 0),
+      trailing: IconButton(
+        onPressed: () => Navigator.of(context).pushNamed(
+          '/task',
+          arguments: {'id': task.id},
+        ),
+        icon: const Icon(Icons.info_outline),
+      ),
+      title: Padding(
+        padding: const EdgeInsets.only(top: appPadding),
+        child: Text(
+          task.name.value ?? '',
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            decoration:
+                task.isCompleted.value ? TextDecoration.lineThrough : null,
+            color: task.isCompleted.value
+                ? Theme.of(context).colorScheme.onBackground.withOpacity(0.6)
+                : null,
+          ),
+        ),
+      ),
+      isThreeLine: task.description.value != null || task.dueDate.value != null,
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (task.description.value != null)
+            Text(
+              task.description.value!,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onBackground
+                      .withOpacity(0.7)),
+            ),
+          if (task.dueDate.value != null)
+            Text(
+              '${t.taskpage.until_short}: ${DateFormat.yMMMMd().format(task.dueDate.value!)}',
+            ),
+        ],
       ),
     );
   }
@@ -174,16 +190,13 @@ class DismisBackground extends StatelessWidget {
       color: color,
       child: Align(
           alignment: alignment,
-          child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: constraints.maxHeight,
+          child: Observer(builder: (_) {
+            return SizedBox(
+              width: max(iconBoxSize.value, 0),
+              child: Align(
+                alignment: alignment * -1,
+                child: Icon(icon),
               ),
-              child: Observer(builder: (_) {
-                return SizedBox(
-                    width: max(iconBoxSize.value, 0), child: Icon(icon));
-              }),
             );
           })),
     );
