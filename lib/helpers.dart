@@ -48,8 +48,8 @@ void taskCreatingDialog(context) {
         useSafeArea: true,
         isScrollControlled: true,
         builder: (context) {
-          return ListView(
-            shrinkWrap: true,
+          return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 height: appPadding * 2,
@@ -58,7 +58,7 @@ void taskCreatingDialog(context) {
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(16))),
               ),
-              const TaskPage(),
+              const Flexible(child: TaskPage()),
               SizedBox(
                 height: MediaQuery.viewInsetsOf(context).bottom,
               ),

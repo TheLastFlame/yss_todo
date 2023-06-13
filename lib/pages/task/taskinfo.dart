@@ -13,8 +13,7 @@ import '../../controllers/home.dart';
 import '../../i18n/strings.g.dart';
 
 class TaskPage extends StatelessWidget {
-  const TaskPage({super.key, this.id});
-  final int? id;
+  const TaskPage({super.key});
 
   @override
   Widget build(BuildContext context) {
