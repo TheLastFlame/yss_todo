@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yss_todo/models/task.dart';
 
-import '../constants.dart';
 import 'home.dart';
 
 class TaskController {
@@ -14,7 +11,7 @@ class TaskController {
 
   late Observable<bool> withDueDate;
   late Observable<DateTime> dueDate;
-  late UniqueKey id;
+  late ValueKey id;
   late Priority priority;
 
   TaskController(TaskModel model) {
@@ -27,9 +24,9 @@ class TaskController {
   }
 
   void saveData() {
-    var tasks = GetIt.I<HomeController>().taskList;
+    var controller = GetIt.I<HomeController>();
     bool isCreating = false;
-    var task = tasks.firstWhere(
+    var task = controller.taskList.firstWhere(
       (e) => e.id == id,
       orElse: () {
         isCreating = true;
@@ -44,10 +41,7 @@ class TaskController {
             descriptionControl.text != '' ? descriptionControl.text : null;
         task.priority.value = priority;
         task.dueDate.value = withDueDate.value ? dueDate.value : null;
-
-        if (isCreating) {
-          Timer(animationsDuration, () => tasks.add(task));
-        }
+        controller.saveTask(task, isCreating);
       },
     );
   }

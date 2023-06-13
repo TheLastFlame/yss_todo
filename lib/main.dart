@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:yss_todo/controllers/home.dart';
 import 'package:yss_todo/pages/home/home.dart';
 import 'package:yss_todo/pages/task/taskinfo.dart';
 
 import 'i18n/strings.g.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LocaleSettings.useDeviceLocale();
   settingUpSystemUIOverlay();
+
+  // await GetStorage.init('Settings');
+  await GetStorage.init('TaskList');
 
   GetIt.I.registerSingleton<HomeController>(HomeController());
 
@@ -44,7 +48,6 @@ class MainApp extends StatelessWidget {
       routes: {
         '/': (context) => const Homepage(),
         '/task': (context) => const TaskPage(),
-
       },
     );
   }

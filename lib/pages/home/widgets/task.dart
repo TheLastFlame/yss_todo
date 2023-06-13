@@ -21,6 +21,7 @@ class Task extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var iconBoxSize = 0.0.obs();
+    var controller = GetIt.I<HomeController>();
     return ClipRRect(
       borderRadius: first
           ? const BorderRadius.vertical(
@@ -67,16 +68,14 @@ class Task extends StatelessWidget {
             confirmDismiss: (direction) async {
               if (direction == DismissDirection.startToEnd) {
                 Timer(animationsDuration, () => task.isCompleted.toggle());
-                return !GetIt.I<HomeController>().isComplitedVisible.value;
+                return !controller.isComplitedVisible.value;
               } else {
                 return confirm(context);
               }
             },
             onDismissed: (DismissDirection direction) {
               if (direction != DismissDirection.startToEnd) {
-                runInAction(() => GetIt.I<HomeController>()
-                    .taskList
-                    .removeWhere((element) => element.id == task.id));
+                controller.removeTask(task.id);
               }
             },
             child: ListTile(
