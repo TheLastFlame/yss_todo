@@ -17,38 +17,39 @@ class TaskDeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(13),
-      onTap: () => confirm(context).then(
-        (value) {
-          if (value) {
-            GetIt.I<HomeController>()
-                .taskList
-                .removeWhere((element) => element.id == model.id);
-            Navigator.of(context).popAndPushNamed('/');
-          }
-        },
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-            vertical: appPadding * 4, horizontal: appPadding * 2.5),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.delete_forever,
-              color: Colors.red,
-            ),
-            const SizedBox(
-              width: appPadding,
-            ),
-            Text(
-              t.taskpage.delete,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: Colors.red),
-            ),
-          ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: appPadding, vertical: appPadding),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(13),
+        onTap: () => confirm(context).then(
+          (value) {
+            if (value) {
+              GetIt.I<HomeController>().removeTask(model);
+              Navigator.of(context).pushReplacementNamed('/');
+            }
+          },
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: appPadding * 3, horizontal: appPadding*1.5),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.delete_forever,
+                color: Colors.red,
+              ),
+              const SizedBox(
+                width: appPadding,
+              ),
+              Text(
+                t.taskpage.delete,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.red),
+              ),
+            ],
+          ),
         ),
       ),
     );
