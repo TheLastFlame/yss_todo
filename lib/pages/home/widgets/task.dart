@@ -67,7 +67,7 @@ class Task extends StatelessWidget {
             },
             confirmDismiss: (direction) async {
               if (direction == DismissDirection.startToEnd) {
-                Timer(animationsDuration, () => task.isCompleted.toggle());
+                Timer(animationsDuration, () => controller.changeTaskStatus(task));
                 return !controller.isComplitedVisible.value;
               } else {
                 return confirm(context);
@@ -92,7 +92,7 @@ class Task extends StatelessWidget {
                 child: Observer(builder: (_) {
                   return Checkbox(
                     onChanged: (val) =>
-                        runInAction(() => task.isCompleted.toggle()),
+                        runInAction(() => controller.changeTaskStatus(task)),
                     value: task.isCompleted.value,
                   );
                 }),

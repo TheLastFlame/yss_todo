@@ -28,4 +28,9 @@ class HomeController {
     if (isCreating) Timer(animationsDuration, () => taskList.add(task));
     _taskStorage.write(task.id.toString(), task.toJSON());
   }
+
+  void changeTaskStatus (TaskModel task) {
+    task.isCompleted.toggle();
+    saveTask(task, false);
+  }
 }

@@ -1,9 +1,6 @@
 import "dart:convert";
-
 import "package:flutter/material.dart";
-import "package:get_it/get_it.dart";
 import "package:mobx/mobx.dart";
-import "package:yss_todo/controllers/home.dart";
 
 class TaskModel {
   late ValueKey id;
@@ -26,11 +23,6 @@ class TaskModel {
     this.dueDate = Observable(dueDate);
     this.priority = Observable(priority);
     this.isCompleted = Observable(isCompleted);
-
-    autorun((p0) {
-      GetIt.I<HomeController>().saveTask(this, false);
-      return isCompleted;
-    });
   }
 
   TaskModel.fromJSON(String json) {
@@ -45,7 +37,7 @@ class TaskModel {
 
   toJSON() {
     return jsonEncode({
-      "id": id.toString(),
+      "id": id.value,
       "name": name.value,
       "description": description.value,
       "dueDate": dueDate.value.toString(),
