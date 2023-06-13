@@ -78,7 +78,6 @@ class Task extends StatelessWidget {
             if (direction != DismissDirection.startToEnd) {
               controller.removeTask(task.id);
             }
-            controller.scrollControl.jumpTo(controller.scrollControl.offset);
           },
           child: TaskTile(
               first: first, task: task, controller: controller, last: last),

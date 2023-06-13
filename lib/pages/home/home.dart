@@ -13,11 +13,11 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         controller: GetIt.I<HomeController>().scrollControl,
-        slivers: [
+        slivers: const [
           HomeAppBar(),
           TaskList(),
           //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 102),
           )
         ],
