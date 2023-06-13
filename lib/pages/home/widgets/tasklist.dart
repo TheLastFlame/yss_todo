@@ -10,9 +10,7 @@ import '../../../helpers.dart';
 import '../../../i18n/strings.g.dart';
 
 class TaskList extends StatelessWidget {
-  const TaskList({super.key, required this.scrollControl});
-
-  final ScrollController scrollControl;
+  const TaskList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,7 @@ class TaskList extends StatelessWidget {
                               controller.taskList.isEmpty ? 13 : 0),
                           bottom: const Radius.circular(13)),
                     ),
-                    onTap: () => taskCreatingDialog(context, scrollControl),
+                    onTap: () => taskCreatingDialog(context),
                     visualDensity: const VisualDensity(horizontal: -4),
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: appPadding),

@@ -11,12 +11,12 @@ import '../../../i18n/strings.g.dart';
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     super.key,
-    required this.scrollControl,
   });
-  final ScrollController scrollControl;
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollControl =
+        GetIt.I<HomeController>().scrollControl;
     var appBarExpandProcent = 0.0.obs();
     final screenThird = MediaQuery.sizeOf(context).height / 3;
 

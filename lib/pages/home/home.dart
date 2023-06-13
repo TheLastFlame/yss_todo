@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:yss_todo/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/pages/home/widgets/appbar.dart';
 import 'package:yss_todo/pages/home/widgets/tasklist.dart';
@@ -8,13 +10,12 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var scrollControl = ScrollController();
     return Scaffold(
       body: CustomScrollView(
-        controller: scrollControl,
+        controller: GetIt.I<HomeController>().scrollControl,
         slivers: [
-          HomeAppBar(scrollControl: scrollControl),
-          TaskList(scrollControl: scrollControl),
+          HomeAppBar(),
+          TaskList(),
           //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
           const SliverToBoxAdapter(
             child: SizedBox(height: 102),
@@ -22,7 +23,7 @@ class Homepage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => taskCreatingDialog(context, scrollControl),
+        onPressed: () => taskCreatingDialog(context),
         child: const Icon(Icons.add),
       ),
     );
