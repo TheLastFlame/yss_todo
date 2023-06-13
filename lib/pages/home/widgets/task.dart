@@ -109,11 +109,7 @@ class TaskTile extends StatelessWidget {
           ? const RoundedRectangleBorder(
               borderRadius:
                   BorderRadius.vertical(top: Radius.circular(13)))
-              borderRadius:
-                  BorderRadius.vertical(top: Radius.circular(13)))
           : null,
-      onTap: () => Navigator.of(context)
-          .pushNamed('/task', arguments: {'id': task.id}),
       onTap: () => Navigator.of(context)
           .pushNamed('/task', arguments: {'id': task.id}),
       visualDensity: const VisualDensity(horizontal: -4),
@@ -128,9 +124,6 @@ class TaskTile extends StatelessWidget {
         }),
       ),
       contentPadding: EdgeInsets.only(
-          left: appPadding,
-          right: appPadding,
-          bottom: last ? appPadding : 0),
           left: appPadding,
           right: appPadding,
           bottom: last ? appPadding : 0),
@@ -151,14 +144,7 @@ class TaskTile extends StatelessWidget {
             decoration: task.isCompleted.value
                 ? TextDecoration.lineThrough
                 : null,
-            decoration: task.isCompleted.value
-                ? TextDecoration.lineThrough
-                : null,
             color: task.isCompleted.value
-                ? Theme.of(context)
-                    .colorScheme
-                    .onBackground
-                    .withOpacity(0.6)
                 ? Theme.of(context)
                     .colorScheme
                     .onBackground
@@ -167,8 +153,6 @@ class TaskTile extends StatelessWidget {
           ),
         ),
       ),
-      isThreeLine:
-          task.description.value != null || task.dueDate.value != null,
       isThreeLine:
           task.description.value != null || task.dueDate.value != null,
       subtitle: Column(
@@ -220,16 +204,7 @@ class DismisBackground extends StatelessWidget {
             return ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: constraints.maxHeight,
-          child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: constraints.maxHeight,
               ),
-              child: Observer(builder: (_) {
-                return SizedBox(
-                    width: max(iconBoxSize.value, 24), child: Icon(icon));
-              }),
               child: Observer(builder: (_) {
                 return SizedBox(
                     width: max(iconBoxSize.value, 24), child: Icon(icon));
