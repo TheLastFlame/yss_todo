@@ -47,23 +47,9 @@ void taskCreatingDialog(context) {
         context: context,
         useSafeArea: true,
         isScrollControlled: true,
+        backgroundColor: Theme.of(context).colorScheme.background,
         builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                height: appPadding * 2,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(16))),
-              ),
-              const Flexible(child: TaskPage()),
-              SizedBox(
-                height: MediaQuery.viewInsetsOf(context).bottom,
-              ),
-            ],
-          );
+          return const TaskPage();
         },
       );
     },

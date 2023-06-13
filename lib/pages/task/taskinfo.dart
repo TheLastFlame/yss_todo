@@ -36,6 +36,13 @@ class TaskPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              height: appPadding * 2,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(16))),
+            ),
             TaskAppBar(controller: controller),
             Flexible(
               child: ListView(
@@ -56,8 +63,8 @@ class TaskPage extends StatelessWidget {
                     ),
                   ),
                   Card(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: appPadding * 2),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: appPadding * 2),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: appPadding * 2),
@@ -79,6 +86,9 @@ class TaskPage extends StatelessWidget {
                   if (id != null) TaskDeleteButton(model: task),
                 ],
               ),
+            ),
+            SizedBox(
+              height: MediaQuery.viewInsetsOf(context).bottom,
             ),
           ],
         ),
