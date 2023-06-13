@@ -41,7 +41,7 @@ class TaskList extends StatelessWidget {
                     itemBuilder: (context, index) => Task(
                       list.value[index],
                       first: index == 0,
-                      last: index == list.value.length-1,
+                      last: index == list.value.length - 1,
                     ),
                   ),
                 ),
@@ -49,23 +49,22 @@ class TaskList extends StatelessWidget {
                   const Divider(
                     height: 0,
                   ),
-                InkWell(
-                  borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(
-                          controller.taskList.isEmpty ? 13 : 0),
-                      bottom: const Radius.circular(13)),
-                  onTap: () => taskCreatingDialog(context, scrollControl),
-                  child: ListTile(
-                      visualDensity: const VisualDensity(
-                          horizontal: VisualDensity.minimumDensity),
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: appPadding),
-                      leading: const Padding(
-                        padding: EdgeInsets.all(appPadding * 2),
-                        child: Icon(Icons.add),
-                      ),
-                      title: Text(t.homepage.newtask)),
-                ),
+                ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(
+                              controller.taskList.isEmpty ? 13 : 0),
+                          bottom: const Radius.circular(13)),
+                    ),
+                    onTap: () => taskCreatingDialog(context, scrollControl),
+                    visualDensity: const VisualDensity(horizontal: -4),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: appPadding),
+                    leading: const Padding(
+                      padding: EdgeInsets.all(appPadding * 2),
+                      child: Icon(Icons.add),
+                    ),
+                    title: Text(t.homepage.newtask)),
               ],
             );
           }),
