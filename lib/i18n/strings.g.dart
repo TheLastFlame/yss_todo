@@ -3,7 +3,7 @@
 /// Locales: 2
 /// Strings: 36 (18 per locale)
 ///
-/// Built on 2023-06-11 at 13:58 UTC
+/// Built on 2023-06-13 at 13:59 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -246,7 +246,7 @@ class _StringsHomepageRu implements _StringsHomepageEn {
 	@override final _StringsRu _root; // ignore: unused_field
 
 	// Translations
-	@override String get mytasks => 'Мои тёмные делишки';
+	@override String get mytasks => 'Мои задачи';
 	@override String get done => 'Выполнено';
 	@override String get newtask => 'Добавить';
 }
@@ -307,7 +307,7 @@ extension on _StringsRu {
 			case 'commonwords.confirmation': return 'Вы уверены?';
 			case 'commonwords.confirm': return 'Подтвердить';
 			case 'commonwords.cancel': return 'Отмена';
-			case 'homepage.mytasks': return 'Мои тёмные делишки';
+			case 'homepage.mytasks': return 'Мои задачи';
 			case 'homepage.done': return 'Выполнено';
 			case 'homepage.newtask': return 'Добавить';
 			case 'taskpage.task': return 'Задача';
