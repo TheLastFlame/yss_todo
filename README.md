@@ -1,9 +1,9 @@
 <a href="https://ysstodo.pages.dev">
-  <h1 align="center">
+  <p align="center">
     <picture>
       <img alt="YSS ToDo" src="https://raw.githubusercontent.com/TheLastFlame/yss_todo/main/assets/img/yssBanner.png">
     </picture>
-  </h1>
+  </p>
 </a>
 
 # YSS ToDo
@@ -13,7 +13,7 @@
 
 ## Demo
 
-https://ysstodo.pages.dev
+https://ysstodo.pages.dev — web версия
 ## Features
 
 
