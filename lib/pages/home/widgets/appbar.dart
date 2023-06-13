@@ -109,6 +109,6 @@ class HomeAppBar extends StatelessWidget {
       onPressed: () => runInAction(
           () => GetIt.I<HomeController>().isComplitedVisible.toggle()),
       icon: Icon(GetIt.I<HomeController>().isComplitedVisible.value
-          ? Icons.visibility
-          : Icons.visibility_off));
+          ? Icons.visibility_off
+          : Icons.visibility));
 }
