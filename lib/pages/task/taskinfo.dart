@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/constants.dart';
 import 'package:yss_todo/controllers/task.dart';
+import 'package:yss_todo/logger.dart';
 import 'package:yss_todo/models/task.dart';
 import 'package:yss_todo/pages/task/widgets/appbar.dart';
 import 'package:yss_todo/pages/task/widgets/datepicker.dart';
@@ -17,6 +18,7 @@ class TaskPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('Opening the task page');
     final arguments = ModalRoute.of(context)?.settings.arguments;
     var id = arguments != null ? (arguments as Map)['id'] : null;
     var task = id != null
@@ -24,9 +26,12 @@ class TaskPage extends StatelessWidget {
             .taskList
             .firstWhere((element) => element.id == id)
         : TaskModel();
+    logger.i(id == null ? 'Its new task' : 'Task id: $id');
 
+    logger.i('Task controller initialization');
     var controller = TaskController(task);
 
+    logger.i('Drawing task page widgets');
     return Material(
       child: SafeArea(
         child: Column(

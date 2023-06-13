@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
+import 'package:yss_todo/logger.dart';
 import 'package:yss_todo/pages/home/widgets/appbar.dart';
 import 'package:yss_todo/pages/home/widgets/tasklist.dart';
 
@@ -10,6 +11,7 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('Home page opening');
     return Scaffold(
       body: CustomScrollView(
         controller: GetIt.I<HomeController>().scrollControl,

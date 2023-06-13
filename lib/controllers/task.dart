@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yss_todo/models/task.dart';
 
+import '../logger.dart';
 import 'home.dart';
 
 class TaskController {
@@ -24,6 +25,7 @@ class TaskController {
   }
 
   void saveData() {
+    logger.i('Save task data');
     var controller = GetIt.I<HomeController>();
     bool isCreating = false;
     var task = controller.taskList.firstWhere(
