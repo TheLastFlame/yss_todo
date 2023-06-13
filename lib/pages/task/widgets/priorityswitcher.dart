@@ -27,6 +27,14 @@ class PrioritySwitcher extends StatelessWidget {
               .map(
                 (value) => DropdownMenuEntry<int>(
                   value: value.index,
+                  leadingIcon: Icon(
+                    [
+                      Icons.arrow_downward,
+                      Icons.fiber_manual_record_outlined,
+                      Icons.arrow_upward,
+                      Icons.warning_amber_rounded,
+                    ][value.index],
+                  ),
                   label: [
                     t.taskpage.low,
                     t.taskpage.regular,
@@ -37,8 +45,7 @@ class PrioritySwitcher extends StatelessWidget {
               )
               .toList(),
           onSelected: (int? value) {
-             controller.priority =
-                Priority.values[value!];
+            controller.priority = Priority.values[value!];
           }),
     );
   }
