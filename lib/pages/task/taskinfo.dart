@@ -36,13 +36,7 @@ class TaskPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              height: appPadding * 2,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(16))),
-            ),
+            const SizedBox(height: appPadding * 2),
             TaskAppBar(controller: controller),
             Flexible(
               child: ListView(

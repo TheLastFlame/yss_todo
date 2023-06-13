@@ -47,12 +47,16 @@ void taskCreatingDialog(context) {
         context: context,
         useSafeArea: true,
         isScrollControlled: true,
-        backgroundColor: Theme.of(context).colorScheme.background,
         builder: (context) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Flexible(child: TaskPage()),
+              const Flexible(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                  child: TaskPage(),
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.viewInsetsOf(context).bottom,
               ),
