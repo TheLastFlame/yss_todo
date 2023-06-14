@@ -20,7 +20,7 @@ Future<bool> confirm(context) async {
           onPressed: () => Navigator.of(context).pop(),
           child: Text(t.commonwords.cancel),
         ),
-        TextButton(
+        FilledButton  (
           onPressed: () {
             result = true;
             Navigator.of(context).pop();
