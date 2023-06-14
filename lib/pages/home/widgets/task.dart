@@ -15,9 +15,9 @@ import '../../../i18n/strings.g.dart';
 import 'package:intl/intl.dart';
 
 class Task extends StatelessWidget {
-  const Task(this.task, {super.key, this.first = false, this.last = false});
+  const Task(this.task, {super.key, this.first = false});
   final TaskModel task;
-  final bool first, last;
+  final bool first;
   @override
   Widget build(BuildContext context) {
     var iconBoxSize = 0.0.obs();
@@ -80,7 +80,7 @@ class Task extends StatelessWidget {
             }
           },
           child: TaskTile(
-              first: first, task: task, controller: controller, last: last),
+              first: first, task: task, controller: controller),
         );
       }),
     );
@@ -93,13 +93,11 @@ class TaskTile extends StatelessWidget {
     required this.first,
     required this.task,
     required this.controller,
-    required this.last,
   });
 
   final bool first;
   final TaskModel task;
   final HomeController controller;
-  final bool last;
 
   @override
   Widget build(BuildContext context) {
@@ -118,23 +116,40 @@ class TaskTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(appPadding / 2),
               child: Checkbox(
+                activeColor: Colors.green,
+                side: task.priority.value.index > 1
+                    ? const BorderSide(color: Colors.red, width: 2)
+                    : null,
                 onChanged: (val) =>
                     runInAction(() => controller.changeTaskStatus(task)),
                 value: task.isCompleted.value,
               ),
             ),
-            Icon(
-              [
-                Icons.arrow_downward,
-                Icons.fiber_manual_record_outlined,
-                Icons.arrow_upward,
-                Icons.warning_amber_rounded,
-              ][task.priority.value.index],
-            ),
+            AnimatedSize(
+              duration: animationsDuration,
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                child: !task.isCompleted.value
+                    ? Icon(
+                        [
+                          Icons.arrow_downward,
+                          Icons.fiber_manual_record_outlined,
+                          Icons.arrow_upward,
+                          Icons.warning_amber_rounded,
+                        ][task.priority.value.index],
+                        color:
+                            task.priority.value.index > 1 ? Colors.red : null,
+                      )
+                    : null,
+              ),
+            )
           ],
         ),
-        contentPadding: EdgeInsets.only(
-            left: appPadding, right: appPadding, bottom: last ? appPadding : 0),
+        contentPadding: const EdgeInsets.only(
+          left: appPadding,
+          right: appPadding,
+          bottom: appPadding,
+        ),
         trailing: IconButton(
           onPressed: () => Navigator.of(context).pushNamed(
             '/task',
@@ -176,6 +191,14 @@ class TaskTile extends StatelessWidget {
             if (task.dueDate.value != null)
               Text(
                 '${t.taskpage.until_short}: ${DateFormat.yMMMMd().format(task.dueDate.value!)}',
+                style: TextStyle(
+                  color: task.isCompleted.value
+                      ? Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withOpacity(0.6)
+                      : null,
+                ),
               ),
           ],
         ),
@@ -203,19 +226,24 @@ class DismisBackground extends StatelessWidget {
     return Container(
       color: color,
       child: Align(
-          alignment: alignment,
-          child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: constraints.maxHeight,
-              ),
-              child: Observer(builder: (_) {
-                return SizedBox(
-                    width: max(iconBoxSize.value, 24), child: Icon(icon));
-              }),
-            );
-          })),
+        alignment: alignment,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: appPadding*3 + 48,
+          ),
+          child: Observer(
+            builder: (_) {
+              return SizedBox(
+                width: max(iconBoxSize.value, 24),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }

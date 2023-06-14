@@ -39,7 +39,6 @@ class TaskList extends StatelessWidget {
                     itemBuilder: (context, index) => Task(
                       list.value[index],
                       first: index == 0,
-                      last: index == list.value.length - 1,
                     ),
                   ),
                 ),
