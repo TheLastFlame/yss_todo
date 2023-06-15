@@ -12,25 +12,33 @@ import 'package:yss_todo/pages/task/widgets/taskdeletebtn.dart';
 import '../../controllers/home.dart';
 import '../../i18n/strings.g.dart';
 
+// Страница используется как для отображения диалога нового таска так и для
+// отображения информации о существующего таска
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     logger.i('Opening the task page');
+    // получаем id
     final arguments = ModalRoute.of(context)?.settings.arguments;
+
+    // если id отсутствует, то страница считается страницей создания таска
     var id = arguments != null ? (arguments as Map)['id'] : null;
+    
     var task = id != null
         ? GetIt.I<HomeController>()
             .taskList
             .firstWhere((element) => element.id == id)
         : TaskModel();
+
     logger.i(id == null ? 'Its new task' : 'Task id: $id');
 
     logger.i('Task controller initialization');
     var controller = TaskController(task);
 
     logger.i('Drawing task page widgets');
+    // Тут не скафолд потому что эта страница может отображаться в ботомщите, а скафолд занимает всё пространство
     return Material(
       child: SafeArea(
         child: Column(
@@ -42,6 +50,7 @@ class TaskPage extends StatelessWidget {
               child: ListView(
                 shrinkWrap: true,
                 children: [
+                  /// Поле для ввода названия таска
                   Card(
                     margin: const EdgeInsets.all(appPadding * 2),
                     child: Padding(
@@ -56,6 +65,8 @@ class TaskPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  
+                  /// Поле для ввода описания
                   Card(
                     margin:
                         const EdgeInsets.symmetric(horizontal: appPadding * 2),
@@ -73,9 +84,13 @@ class TaskPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Переключатель приоритета
                   PrioritySwitcher(controller: controller),
                   const Divider(height: 0),
+                  // Выбор сроков
                   DueDatePicker(controller: controller),
+                  
+                  // Если это страница существующего таска отображаем кнопку удаления
                   if (id != null) const Divider(height: 0),
                   if (id != null) TaskDeleteButton(model: task),
                 ],

@@ -22,6 +22,7 @@ class TaskDeleteButton extends StatelessWidget {
           horizontal: appPadding, vertical: appPadding),
       child: InkWell(
         borderRadius: BorderRadius.circular(13),
+        // Подтверждение удаления
         onTap: () => confirm(context).then(
           (value) {
             if (value) {
@@ -29,7 +30,7 @@ class TaskDeleteButton extends StatelessWidget {
               GetIt.I<HomeController>().removeTask(model.id);
             }
           },
-        ),
+        ),  
         child: Padding(
           padding: const EdgeInsets.symmetric(
               vertical: appPadding * 3, horizontal: appPadding * 1.5),

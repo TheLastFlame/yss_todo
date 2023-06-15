@@ -8,6 +8,7 @@ import 'i18n/strings.g.dart';
 
 double lerp(start, end, procent) => start + (end - start) * procent / 100;
 
+// Вызывает диалог подтверждения
 Future<bool> confirm(context) async {
   bool result = false;
   logger.i('A confirmation dialog is opened');
@@ -34,6 +35,7 @@ Future<bool> confirm(context) async {
   return result;
 }
 
+// Вызывает боттомщит со страницей создания таска
 void taskCreatingDialog(context) {
   var scrollControl = GetIt.I<HomeController>().scrollControl;
   logger.i('Scroll down page animation');

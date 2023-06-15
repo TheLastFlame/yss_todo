@@ -13,17 +13,24 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     logger.i('Home page opening');
     return Scaffold(
+
       body: CustomScrollView(
         controller: GetIt.I<HomeController>().scrollControl,
+      
         slivers: const [
+          
           HomeAppBar(),
           TaskList(),
+
           //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
+          // 102 - высота FAB
           SliverToBoxAdapter(
             child: SizedBox(height: 102),
           )
+
         ],
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () => taskCreatingDialog(context),
         child: const Icon(Icons.add),

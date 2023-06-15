@@ -17,7 +17,11 @@ class HomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final ScrollController scrollControl =
         GetIt.I<HomeController>().scrollControl;
+
+    // Процент раскрытия аппбара от 0 до 100
     var appBarExpandProcent = 0.0.obs();
+
+    // Треть экрана
     final screenThird = MediaQuery.sizeOf(context).height / 3;
 
     scrollControl.addListener(
@@ -28,55 +32,59 @@ class HomeAppBar extends StatelessWidget {
       //144 это expandedHeight - 56 (высота свёрнутого аппбара)
     );
 
-    return Observer(builder: (_) {
-      return SliverAppBar(
-        shadowColor: Theme.of(context).colorScheme.shadow,
-        pinned: true,
-        expandedHeight: screenThird,
-        actions: appBarExpandProcent.value == 100
-            ? [isDoneVisibilitySwitcher()]
-            : [settingsButton(appBarExpandProcent)],
-        flexibleSpace: FlexibleSpaceBar(
-          titlePadding: EdgeInsets.only(
-            left:
-                lerp(appPadding * 5, appPadding * 2, appBarExpandProcent.value),
-            bottom:
-                lerp(appPadding * 5, appPadding * 2, appBarExpandProcent.value),
-          ),
-          title: Text(
-            t.homepage.mytasks,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          collapseMode: CollapseMode.pin,
-          background: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(
+    return Observer(
+      builder: (_) {
+        return SliverAppBar(
+          // Фикс тени аппбара
+          shadowColor: Theme.of(context).colorScheme.shadow,
+
+          pinned: true,
+          expandedHeight: screenThird,
+
+          // Убирает кноку настроек
+          actions:[ appBarExpandProcent.value == 100
+              ? isDoneVisibilitySwitcher()
+              : settingsButton(appBarExpandProcent)],
+
+          flexibleSpace: FlexibleSpaceBar(
+            titlePadding: EdgeInsets.only(
+              left: lerp(
+                  appPadding * 5, appPadding * 2, appBarExpandProcent.value),
+              bottom: lerp(
+                  appPadding * 5, appPadding * 2, appBarExpandProcent.value),
+            ),
+            title: Text(
+              t.homepage.mytasks,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            collapseMode: CollapseMode.pin,
+            background: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
                   left: lerp(appPadding * 5, appPadding * 2,
                       appBarExpandProcent.value),
                   right: lerp(appPadding * 3, 0, appBarExpandProcent.value),
-                  bottom: appPadding),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AnimatedOpacity(
-                    opacity: lerp(1, 0, appBarExpandProcent.value),
-                    duration: animationsDuration,
-                    child: Text(
-                        '${t.homepage.done}: ${GetIt.I<HomeController>().taskList.where((e) => e.isCompleted.value).length}'),
-                  ),
-                  Row(
-                    children: [
-                      isDoneVisibilitySwitcher(),
-                    ],
-                  ),
-                ],
+                  bottom: appPadding,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AnimatedOpacity(
+                      opacity: lerp(1, 0, appBarExpandProcent.value),
+                      duration: animationsDuration,
+                      child: Text(
+                          '${t.homepage.done}: ${GetIt.I<HomeController>().taskList.where((e) => e.isCompleted.value).length}'),
+                    ),
+                    isDoneVisibilitySwitcher(),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   AnimatedOpacity settingsButton(Observable<double> appBarExpandProcent) {

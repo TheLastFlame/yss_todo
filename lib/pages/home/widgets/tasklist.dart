@@ -21,6 +21,7 @@ class TaskList extends StatelessWidget {
         child: Card(
           elevation: 2,
           child: Observer(builder: (_) {
+            // выборка заданий для отображение
             var list = Computed(() => controller.taskList
                 .where((el) =>
                     controller.isComplitedVisible.value ||
@@ -38,15 +39,18 @@ class TaskList extends StatelessWidget {
                     itemCount: list.value.length,
                     itemBuilder: (context, index) => Task(
                       list.value[index],
-                      first: index == 0,
+                      first: index == 0
                     ),
                   ),
                 ),
+                // Разделитель списка задач и кнопки добавить
                 if (list.value.isNotEmpty)
                   const Divider(
                     height: 0,
                   ),
+                // Кнопка добавления новой задачи
                 ListTile(
+                    //Скругление при отсутствии задач
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                           top: Radius.circular(

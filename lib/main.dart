@@ -14,6 +14,7 @@ void main() async {
   logger.i(
     'initialize the binding between the Flutter framework and the host platform',
   );
+
   WidgetsFlutterBinding.ensureInitialized();
 
   logger.i('Getting the system locale');
@@ -48,12 +49,17 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     logger.i('The application has been started');
     return MaterialApp(
+      
       debugShowCheckedModeBanner: false,
+      
       theme: ThemeData(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
-      locale: TranslationProvider.of(context).flutterLocale, // use provider
+      
+      // set up localization
+      locale: TranslationProvider.of(context).flutterLocale,
       supportedLocales: AppLocaleUtils.supportedLocales,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      
       initialRoute: '/',
       routes: {
         '/': (context) => const Homepage(),
