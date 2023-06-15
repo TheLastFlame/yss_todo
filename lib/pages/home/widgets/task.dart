@@ -116,7 +116,7 @@ class TaskTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(appPadding / 2),
               child: Checkbox(
-                activeColor: Colors.green,
+                // activeColor: Colors.green, хз, оно стрёмное
                 side: task.priority.value.index > 1
                     ? const BorderSide(color: Colors.red, width: 2)
                     : null,
