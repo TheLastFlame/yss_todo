@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:yss_todo/controllers/home.dart';
+import 'package:yss_todo/domain/controllers/home.dart';
 
-import '../../../constants.dart';
-import '../../../helpers.dart';
-import '../../../i18n/strings.g.dart';
+import '../../../../constants.dart';
+import '../../../../helpers.dart';
+import '../../../../i18n/strings.g.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({

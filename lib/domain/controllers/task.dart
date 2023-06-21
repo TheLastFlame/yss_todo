@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:yss_todo/models/task.dart';
+import 'package:yss_todo/domain/models/task.dart';
 
-import '../logger.dart';
+import '../../logger.dart';
 import '../models/priority.dart';
 import 'home.dart';
 
@@ -27,6 +27,7 @@ class TaskController {
     logger.i('Save task data');
     var controller = GetIt.I<HomeController>();
     bool isCreating = false;
+    //Проверка наличия элемента с таким id в списке
     var task = controller.taskList.firstWhere(
       (e) => e.id == id,
       orElse: () {

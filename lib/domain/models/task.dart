@@ -1,7 +1,7 @@
 import "dart:convert";
 import "package:flutter/material.dart";
 import "package:mobx/mobx.dart";
-import "package:yss_todo/models/priority.dart";
+import 'package:yss_todo/domain/models/priority.dart';
 
 class TaskModel {
   late ValueKey id;

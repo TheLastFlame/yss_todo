@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
-import 'package:yss_todo/controllers/task.dart';
+import 'package:yss_todo/domain/controllers/task.dart';
 
-import '../../../constants.dart';
-import '../../../i18n/strings.g.dart';
+import '../../../../constants.dart';
+import '../../../../i18n/strings.g.dart';
 
 class DueDatePicker extends StatelessWidget {
   const DueDatePicker({

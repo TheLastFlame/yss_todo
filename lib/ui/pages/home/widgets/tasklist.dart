@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:yss_todo/pages/home/widgets/task.dart';
+import 'package:yss_todo/ui/pages/home/widgets/task.dart';
 
-import '../../../constants.dart';
-import '../../../controllers/home.dart';
-import '../../../helpers.dart';
-import '../../../i18n/strings.g.dart';
+import '../../../../constants.dart';
+import '../../../../domain/controllers/home.dart';
+import '../../../../helpers.dart';
+import '../../../../i18n/strings.g.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({super.key});

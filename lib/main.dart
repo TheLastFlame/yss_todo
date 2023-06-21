@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:yss_todo/controllers/home.dart';
+import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/logger.dart';
-import 'package:yss_todo/pages/home/home.dart';
-import 'package:yss_todo/pages/task/taskinfo.dart';
+import 'package:yss_todo/ui/pages/home/home.dart';
+import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 
 import 'i18n/strings.g.dart';
 

@@ -6,12 +6,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yss_todo/constants.dart';
-import 'package:yss_todo/controllers/home.dart';
+import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
-import 'package:yss_todo/models/priority.dart';
-import 'package:yss_todo/models/task.dart';
+import 'package:yss_todo/domain/models/priority.dart';
+import 'package:yss_todo/domain/models/task.dart';
 
-import '../../../i18n/strings.g.dart';
+import '../../../../i18n/strings.g.dart';
 
 import 'package:intl/intl.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:yss_todo/controllers/home.dart';
+import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/logger.dart';
-import 'package:yss_todo/pages/task/taskinfo.dart';
+import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 import 'constants.dart';
 import 'i18n/strings.g.dart';
 

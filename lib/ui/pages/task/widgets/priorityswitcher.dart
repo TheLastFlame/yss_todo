@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:yss_todo/controllers/task.dart';
+import 'package:yss_todo/domain/controllers/task.dart';
 
-import '../../../constants.dart';
-import '../../../i18n/strings.g.dart';
-import '../../../models/priority.dart';
+import '../../../../constants.dart';
+import '../../../../i18n/strings.g.dart';
+import '../../../../domain/models/priority.dart';
 
 class PrioritySwitcher extends StatelessWidget {
   const PrioritySwitcher({

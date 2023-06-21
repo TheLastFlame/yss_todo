@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../constants.dart';
-import '../../../controllers/home.dart';
-import '../../../helpers.dart';
-import '../../../i18n/strings.g.dart';
-import '../../../models/task.dart';
+import '../../../../constants.dart';
+import '../../../../domain/controllers/home.dart';
+import '../../../../helpers.dart';
+import '../../../../i18n/strings.g.dart';
+import '../../../../domain/models/task.dart';
 
 class TaskDeleteButton extends StatelessWidget {
   const TaskDeleteButton({

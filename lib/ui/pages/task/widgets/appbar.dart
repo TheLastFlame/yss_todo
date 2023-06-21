@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yss_todo/controllers/task.dart';
+import 'package:yss_todo/domain/controllers/task.dart';
 
-import '../../../constants.dart';
-import '../../../i18n/strings.g.dart';
+import '../../../../constants.dart';
+import '../../../../i18n/strings.g.dart';
 
 class TaskAppBar extends StatelessWidget {
   const TaskAppBar({

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yss_todo/logger.dart';
-import 'package:yss_todo/models/task.dart';
+import 'package:yss_todo/domain/models/task.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
 class HomeController {
   var scrollControl = ScrollController();
@@ -15,6 +15,7 @@ class HomeController {
   var isComplitedVisible = false.obs();
 
   final _taskStorage = GetStorage('TaskList');
+
   HomeController() {
     logger.i('Getting a list of saved tasks...');
     var values = _taskStorage.getValues().toList();
