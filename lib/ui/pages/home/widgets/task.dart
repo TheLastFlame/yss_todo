@@ -61,7 +61,7 @@ class Task extends StatelessWidget {
                   2,
             );
           },
-          key: task.id,
+          key: ValueKey(task.id),
           dismissThresholds: const {
             DismissDirection.endToStart: 0.3,
             DismissDirection.startToEnd: 0.3

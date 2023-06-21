@@ -1,10 +1,10 @@
 import "dart:convert";
-import "package:flutter/material.dart";
 import "package:mobx/mobx.dart";
 import 'package:yss_todo/domain/models/priority.dart';
+import 'package:uuid/uuid.dart';
 
 class TaskModel {
-  late ValueKey id;
+  late String id;
   late Observable<String?> name;
   late Observable<DateTime?> dueDate;
   late Observable<Priority> priority;
@@ -17,7 +17,7 @@ class TaskModel {
       dueDate,
       priority = Priority.regular,
       isCompleted = false}) {
-    this.id = id ?? ValueKey(UniqueKey().toString());
+    this.id = id ?? const Uuid().v4();
     this.name = Observable(name);
     this.dueDate = Observable(dueDate);
     this.priority = Observable(priority);
@@ -26,7 +26,7 @@ class TaskModel {
 
   TaskModel.fromJSON(String json) {
     var jsonMap = jsonDecode(json);
-    id = ValueKey(jsonMap['id']);
+    id = jsonMap['id'];
     name = Observable(jsonMap['name']);
     dueDate = Observable(jsonMap['dueDate'] != null ? DateTime.tryParse(jsonMap['dueDate']) : null);
     priority = Observable(Priority.values[jsonMap['priority']]);
@@ -35,7 +35,7 @@ class TaskModel {
 
   toJSON() {
     return jsonEncode({
-      "id": id.value,
+      "id": id,
       "name": name.value,
       "dueDate": dueDate.value.toString(),
       "priority": priority.value.index,

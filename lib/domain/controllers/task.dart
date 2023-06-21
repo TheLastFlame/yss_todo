@@ -12,7 +12,7 @@ class TaskController {
 
   late Observable<bool> withDueDate;
   late Observable<DateTime> dueDate;
-  late ValueKey id;
+  late String id;
   late Priority priority;
 
   TaskController(TaskModel model) {
@@ -41,7 +41,7 @@ class TaskController {
         task.name.value = nameControl.text;
         task.priority.value = priority;
         task.dueDate.value = withDueDate.value ? dueDate.value : null;
-        controller.saveTask(task, isCreating);
+        controller.saveTask(task, isCreating: isCreating);
       },
     );
   }
