@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 import 'package:yss_todo/constants.dart';
 import 'package:yss_todo/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
+import 'package:yss_todo/models/priority.dart';
 import 'package:yss_todo/models/task.dart';
 
 import '../../../i18n/strings.g.dart';
@@ -109,8 +110,9 @@ class TaskTile extends StatelessWidget {
               : null,
           onTap: () => Navigator.of(context)
               .pushNamed('/task', arguments: {'id': task.id}),
-          // Изменение стандартных отступов
-          visualDensity: const VisualDensity(horizontal: -4),
+
+          // Изменение афигеннейших, просто лучших отступов, которые ска разные на разных платформах (гении, лять)
+          visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
 
           leading: Row(
             mainAxisSize: MainAxisSize.min,
@@ -134,44 +136,30 @@ class TaskTile extends StatelessWidget {
                 child: SizedBox(
                   child: !task.isCompleted.value
                       ? Icon(
-                          [
-                            Icons.arrow_downward,
-                            Icons.fiber_manual_record_outlined,
-                            Icons.arrow_upward,
-                            Icons.warning_amber_rounded,
-                          ][task.priority.value.index],
-                          color:
-                              task.priority.value.index > 1 ? Colors.red : null,
+                          task.priority.value.icon,
+                          color: task.priority.value.color,
                         )
                       : null,
                 ),
               )
             ],
           ),
-          contentPadding: const EdgeInsets.only(
-            left: appPadding,
-            right: appPadding,
-            bottom: appPadding,
-          ),
+          contentPadding: const EdgeInsets.all(appPadding),
 
-          title: Padding(
-            padding: const EdgeInsets.only(top: appPadding),
-            child: Text(
-              task.name.value ?? '',
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                decoration:
-                    task.isCompleted.value ? TextDecoration.lineThrough : null,
-                color: task.isCompleted.value
-                    ? Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withOpacity(0.6)
-                    : null,
-              ),
+          title: Text(
+            task.name.value ?? '',
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              decoration:
+                  task.isCompleted.value ? TextDecoration.lineThrough : null,
+              color: task.isCompleted.value
+                  ? Theme.of(context).colorScheme.onBackground.withOpacity(0.6)
+                  : null,
             ),
           ),
+          titleAlignment: ListTileTitleAlignment.titleHeight,
           // Иконка информации
           trailing: IconButton(
             icon: const Icon(Icons.info_outline),
@@ -180,26 +168,8 @@ class TaskTile extends StatelessWidget {
               arguments: {'id': task.id},
             ),
           ),
-          isThreeLine:
-              task.description.value != null || task.dueDate.value != null,
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Если есть описание добавляем его
-              if (task.description.value != null)
-                Text(
-                  task.description.value!,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withOpacity(0.7)),
-                ),
-              // Если есть сроки добавляем их
-              if (task.dueDate.value != null)
-                Text(
+          subtitle: task.dueDate.value != null
+              ? Text(
                   '${t.taskpage.until_short}: ${DateFormat.yMMMMd().format(task.dueDate.value!)}',
                   style: TextStyle(
                     color: task.isCompleted.value
@@ -209,16 +179,14 @@ class TaskTile extends StatelessWidget {
                             .withOpacity(0.6)
                         : null,
                   ),
-                ),
-            ],
-          ),
+                )
+              : null,
         );
       },
     );
   }
 }
 
-// Отдельный класс для БГ потому что нужна анимация
 class DismisBackground extends StatelessWidget {
   const DismisBackground({
     super.key,
@@ -228,7 +196,7 @@ class DismisBackground extends StatelessWidget {
     required this.alignment,
   });
 
-  final Observable<double> iconBoxSize; // Размер контейнера для анимации
+  final Observable<double> iconBoxSize;
   final Color color;
   final IconData icon;
   final Alignment alignment;

@@ -57,30 +57,13 @@ class TaskPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: appPadding * 2),
                       child: TextField(
+                        minLines: 5,
+                        maxLines: null,
                         controller: controller.nameControl,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: t.taskpage.name,
                         ),
-                      ),
-                    ),
-                  ),
-                  
-                  /// Поле для ввода описания
-                  Card(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: appPadding * 2),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: appPadding * 2),
-                      child: TextField(
-                        controller: controller.descriptionControl,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: t.taskpage.description,
-                        ),
-                        minLines: 5,
-                        maxLines: null,
                       ),
                     ),
                   ),

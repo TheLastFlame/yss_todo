@@ -3,7 +3,7 @@ import 'package:yss_todo/controllers/task.dart';
 
 import '../../../constants.dart';
 import '../../../i18n/strings.g.dart';
-import '../../../models/task.dart';
+import '../../../models/priority.dart';
 
 class PrioritySwitcher extends StatelessWidget {
   const PrioritySwitcher({
@@ -27,20 +27,8 @@ class PrioritySwitcher extends StatelessWidget {
               .map(
                 (value) => DropdownMenuEntry<int>(
                   value: value.index,
-                  leadingIcon: Icon(
-                    [
-                      Icons.arrow_downward,
-                      Icons.fiber_manual_record_outlined,
-                      Icons.arrow_upward,
-                      Icons.warning_amber_rounded,
-                    ][value.index],
-                  ),
-                  label: [
-                    t.taskpage.low,
-                    t.taskpage.regular,
-                    t.taskpage.hight,
-                    t.taskpage.critical
-                  ][value.index],
+                  leadingIcon: Icon(value.icon),
+                  label: value.name,
                 ),
               )
               .toList(),
