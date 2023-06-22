@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/data/storage/tasklist.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
+import 'package:yss_todo/domain/controllers/main.dart';
 import 'package:yss_todo/logger.dart';
 import 'package:yss_todo/ui/pages/home/home.dart';
 import 'package:yss_todo/ui/pages/task/taskinfo.dart';
@@ -26,7 +27,8 @@ void main() async {
   // await GetStorage.init('Settings');
   GetIt.I.registerSingleton<TaskListDB>(await TaskListDBGetStorage.init());
 
-  logger.i('Controller registration');
+  logger.i('Controllers registration');
+  GetIt.I.registerSingleton<MainController>(await MainController.init());
   GetIt.I.registerSingleton<HomeController>(await HomeController.init());
 
   runApp(TranslationProvider(child: const MainApp()));
