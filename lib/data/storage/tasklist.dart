@@ -14,7 +14,7 @@ class TaskListDBGetStorage implements TaskListDB {
 
   @override
   Future<void> save(TaskModel task) async {
-    await _taskStorage.write(task.id.toString(), task.toJSON());
+    await _taskStorage.write(task.id.toString(), task.toJson());
     logger.i('Task ${task.id} data is saved');
   }
 
@@ -30,7 +30,7 @@ class TaskListDBGetStorage implements TaskListDB {
     List values = _taskStorage.getValues().toList();
     logger.i(values);
     return values.map(
-      (e) => TaskModel.fromJSON(e),
+      (e) => TaskModel.fromJson(e),
     );
   }
 

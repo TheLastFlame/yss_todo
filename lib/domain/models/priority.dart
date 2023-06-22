@@ -4,8 +4,8 @@ import '../../i18n/strings.g.dart';
 
 enum Priority {
   low,
-  regular,
-  high
+  basic,
+  important
 }
 
 extension PriorityExtension on Priority {
@@ -13,9 +13,9 @@ extension PriorityExtension on Priority {
     switch (this) {
       case Priority.low:
         return t.taskpage.low;
-      case Priority.regular:
+      case Priority.basic:
         return t.taskpage.regular;
-      case Priority.high:
+      case Priority.important:
         return t.taskpage.hight;
     }
   }
@@ -23,15 +23,15 @@ extension PriorityExtension on Priority {
     switch (this) {
       case Priority.low:
         return Icons.arrow_downward;
-      case Priority.regular:
+      case Priority.basic:
         return Icons.fiber_manual_record_outlined;
-      case Priority.high:
+      case Priority.important:
         return Icons.warning_amber_rounded;
     }
   }
   Color? get color {
     switch (this) {
-      case Priority.high:
+      case Priority.important:
         return Colors.red;
       default:
         return null;

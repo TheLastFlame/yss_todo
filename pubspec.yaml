@@ -7,8 +7,10 @@ environment:
   sdk: '>=3.0.3 <4.0.0'
 
 dependencies:
+  build_runner: ^2.4.5
   flutter:
     sdk: flutter
+  flutter_lints: ^2.0.1
   flutter_localizations:
     sdk: flutter
   flutter_mobx: ^2.0.6+5
@@ -24,7 +26,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  json_annotation: ^4.8.1
+  json_serializable_mobx: ^0.10.3
 
 flutter:
   uses-material-design: true

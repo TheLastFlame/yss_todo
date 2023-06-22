@@ -25,7 +25,7 @@ class TaskList extends StatelessWidget {
             var list = Computed(() => controller.taskList
                 .where((el) =>
                     controller.isComplitedVisible.value ||
-                    !el.isCompleted.value)
+                    !el.done.value)
                 .toList());
             return Column(
               children: [

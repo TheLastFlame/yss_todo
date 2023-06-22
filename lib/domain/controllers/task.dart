@@ -17,10 +17,10 @@ class TaskController {
 
   TaskController(TaskModel model) {
     id = model.id;
-    withDueDate = Observable(model.dueDate.value != null);
-    dueDate = Observable(model.dueDate.value ?? DateTime.now());
-    nameControl.text = model.name.value ?? '';
-    priority = model.priority.value;
+    withDueDate = Observable(model.deadline.value != null);
+    dueDate = Observable(model.deadline.value ?? DateTime.now());
+    nameControl.text = model.text.value ?? '';
+    priority = model.importance.value;
   }
 
   void saveData() {
@@ -38,9 +38,9 @@ class TaskController {
     runInAction(
       () {
         task.id = id;
-        task.name.value = nameControl.text;
-        task.priority.value = priority;
-        task.dueDate.value = withDueDate.value ? dueDate.value : null;
+        task.text.value = nameControl.text;
+        task.importance.value = priority;
+        task.deadline.value = withDueDate.value ? dueDate.value : null;
         controller.saveTask(task, isCreating: isCreating);
       },
     );

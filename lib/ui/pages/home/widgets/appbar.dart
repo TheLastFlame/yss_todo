@@ -74,7 +74,7 @@ class HomeAppBar extends StatelessWidget {
                       opacity: lerp(1, 0, appBarExpandProcent.value),
                       duration: animationsDuration,
                       child: Text(
-                          '${t.homepage.done}: ${GetIt.I<HomeController>().taskList.where((e) => e.isCompleted.value).length}'),
+                          '${t.homepage.done}: ${GetIt.I<HomeController>().taskList.where((e) => e.done.value).length}'),
                     ),
                     isDoneVisibilitySwitcher(),
                   ],

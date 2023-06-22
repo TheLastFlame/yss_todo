@@ -42,9 +42,9 @@ class HomeController {
 
   void changeTaskStatus(TaskModel task) {
     logger.i(
-      'Change task ${task.id} status to ${!task.isCompleted.value}',
+      'Change task ${task.id} status to ${!task.done.value}',
     );
-    task.isCompleted.toggle();
+    task.done.toggle();
     saveTask(task);
   }
 }
