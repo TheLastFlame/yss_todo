@@ -26,11 +26,11 @@ class TaskDeleteButton extends StatelessWidget {
         onTap: () => confirm(context).then(
           (value) {
             if (value) {
-              Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
+              Navigator.of(context).pop();
               GetIt.I<HomeController>().removeTask(model.id);
             }
           },
-        ),  
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
               vertical: appPadding * 3, horizontal: appPadding * 1.5),

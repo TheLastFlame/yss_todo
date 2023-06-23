@@ -8,6 +8,8 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:yss_todo/domain/models/task.dart';
 
+import '../../domain/models/resstatuses.dart';
+
 const host = String.fromEnvironment('HOST');
 const token = "Bearer ${const String.fromEnvironment('TOKEN')}";
 
@@ -29,28 +31,34 @@ Future<String> _getId() async {
         (webInfo.userAgent ?? '') +
         webInfo.hardwareConcurrency.toString();
   }
-  return 'unknown'; // unknown
+  return 'unknown';
 }
 
 class TasksAPI {
   late final String deviceId;
+  String lastKnownRevision = '0';
 
   Future<Map<String, dynamic>> getAll() async {
     var res = await http.get(
       Uri.parse('$host/list'),
-      headers: {"Authorization": token},
+      headers: {"Authorization": token, 'X-Generate-Fails': '100'},
     );
-    if (res.statusCode == 200) {
-      final Map<String, dynamic> json = jsonDecode(res.body);
-      return {
-        'status': 'ok',
-        'revision': json['revision'],
-        'tasks': (json['list'] as List).map((e) => TaskModel.fromJson(e)),
-      };
-    } else {
-      return {
-        'status': 'error',
-      };
+    print('object');
+    switch (res.statusCode) {
+      case 200:
+        final Map<String, dynamic> json = jsonDecode(res.body);
+        return {
+          'status': ResponseStatus.normal,
+          'tasks': (json['list'] as List).map((e) => TaskModel.fromJson(e)),
+        };
+      case 500:
+        return {
+          'status': ResponseStatus.iternalProblem,
+        };
+      default:
+        return {
+          'status': ResponseStatus.badRequest,
+        };
     }
   }
 

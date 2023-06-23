@@ -1,36 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
+import 'package:yss_todo/domain/models/resstatuses.dart';
 import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/logger.dart';
 import 'package:yss_todo/ui/pages/home/widgets/appbar.dart';
 import 'package:yss_todo/ui/pages/home/widgets/tasklist.dart';
 
-class Homepage extends StatelessWidget {
+import '../../../i18n/strings.g.dart';
+
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  late final ReactionDisposer errorHandler;
+  late final HomeController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = GetIt.I<HomeController>();
+    controller.getTasks();
+    logger.i('Init errors checker');
+    errorHandler = autorun(
+      (p0) {
+        if (controller.responceError.value != ResponseStatus.normal) {
+          logger.e(controller.responceError.value.toString());
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(controller.responceError.value.text),
+              action: SnackBarAction(
+                label: t.commonwords.retry,
+                onPressed: () {
+                  controller.getTasks();
+                },
+              ),
+            ),
+          );
+          controller.responceError.value = ResponseStatus.normal;
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    logger.i('Disposing');
+    errorHandler();
+  }
 
   @override
   Widget build(BuildContext context) {
     logger.i('Home page opening');
     return Scaffold(
-
-      body: CustomScrollView(
-        controller: GetIt.I<HomeController>().scrollControl,
+      body: RefreshIndicator(
+        onRefresh: () async => controller.getTasks(),
+        child: CustomScrollView(
+          controller: GetIt.I<HomeController>().scrollControl,
+          slivers: const [
+            HomeAppBar(),
+            TaskList(),
       
-        slivers: const [
-          
-          HomeAppBar(),
-          TaskList(),
-
-          //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
-          // 102 - высота FAB
-          SliverToBoxAdapter(
-            child: SizedBox(height: 102),
-          )
-
-        ],
+            //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
+            // 102 - высота FAB
+            SliverToBoxAdapter(
+              child: SizedBox(height: 102),
+            )
+          ],
+        ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () => taskCreatingDialog(context),
         child: const Icon(Icons.add),

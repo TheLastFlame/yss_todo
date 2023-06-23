@@ -7,7 +7,7 @@ abstract interface class TaskListDB {
   Future<void> save(TaskModel task);
   Future<void> remove(String taskID);
   Future<Iterable<TaskModel>> getAll();
-  Future<void> updateAll(List<TaskModel> tasks, int revision);
+  Future<void> updateAll(List<TaskModel> tasks);
 }
 
 class TaskListDBGetStorage implements TaskListDB {
@@ -36,11 +36,10 @@ class TaskListDBGetStorage implements TaskListDB {
   }
 
   @override
-  Future<void> updateAll(List<TaskModel> tasks, int revision) async {
+  Future<void> updateAll(List<TaskModel> tasks) async {
     logger.w('Database erasering');
     await _taskStorage.erase();
     tasks.map((e) => save(e));
-    _taskStorage.write('revision', revision);
   }
 
   static Future<TaskListDBGetStorage> init() async {

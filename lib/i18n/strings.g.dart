@@ -1,9 +1,9 @@
 /// Generated file. Do not edit.
 ///
 /// Locales: 2
-/// Strings: 36 (18 per locale)
+/// Strings: 44 (22 per locale)
 ///
-/// Built on 2023-06-13 at 13:59 UTC
+/// Built on 2023-06-23 at 19:31 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -148,6 +148,7 @@ class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
 
 	// Translations
 	late final _StringsCommonwordsEn commonwords = _StringsCommonwordsEn._(_root);
+	late final _StringsErrorsEn errors = _StringsErrorsEn._(_root);
 	late final _StringsHomepageEn homepage = _StringsHomepageEn._(_root);
 	late final _StringsTaskpageEn taskpage = _StringsTaskpageEn._(_root);
 }
@@ -162,6 +163,19 @@ class _StringsCommonwordsEn {
 	String get confirmation => 'Are you sure?';
 	String get confirm => 'Confirm';
 	String get cancel => 'Cancel';
+	String get retry => 'Retry';
+}
+
+// Path: errors
+class _StringsErrorsEn {
+	_StringsErrorsEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get iternal => 'Internal server error';
+	String get no_internet => 'No internet connection';
+	String get unknown => 'Unidentified error';
 }
 
 // Path: homepage
@@ -223,6 +237,7 @@ class _StringsRu implements _StringsEn {
 
 	// Translations
 	@override late final _StringsCommonwordsRu commonwords = _StringsCommonwordsRu._(_root);
+	@override late final _StringsErrorsRu errors = _StringsErrorsRu._(_root);
 	@override late final _StringsHomepageRu homepage = _StringsHomepageRu._(_root);
 	@override late final _StringsTaskpageRu taskpage = _StringsTaskpageRu._(_root);
 }
@@ -237,6 +252,19 @@ class _StringsCommonwordsRu implements _StringsCommonwordsEn {
 	@override String get confirmation => 'Вы уверены?';
 	@override String get confirm => 'Подтвердить';
 	@override String get cancel => 'Отмена';
+	@override String get retry => 'Повторить';
+}
+
+// Path: errors
+class _StringsErrorsRu implements _StringsErrorsEn {
+	_StringsErrorsRu._(this._root);
+
+	@override final _StringsRu _root; // ignore: unused_field
+
+	// Translations
+	@override String get iternal => 'Внутренняя ошибка сервера';
+	@override String get no_internet => 'Отсутствует подключение к интернету';
+	@override String get unknown => 'Неопознанная ошибка';
 }
 
 // Path: homepage
@@ -281,6 +309,10 @@ extension on _StringsEn {
 			case 'commonwords.confirmation': return 'Are you sure?';
 			case 'commonwords.confirm': return 'Confirm';
 			case 'commonwords.cancel': return 'Cancel';
+			case 'commonwords.retry': return 'Retry';
+			case 'errors.iternal': return 'Internal server error';
+			case 'errors.no_internet': return 'No internet connection';
+			case 'errors.unknown': return 'Unidentified error';
 			case 'homepage.mytasks': return 'My tasks';
 			case 'homepage.done': return 'Is done';
 			case 'homepage.newtask': return 'New task';
@@ -307,6 +339,10 @@ extension on _StringsRu {
 			case 'commonwords.confirmation': return 'Вы уверены?';
 			case 'commonwords.confirm': return 'Подтвердить';
 			case 'commonwords.cancel': return 'Отмена';
+			case 'commonwords.retry': return 'Повторить';
+			case 'errors.iternal': return 'Внутренняя ошибка сервера';
+			case 'errors.no_internet': return 'Отсутствует подключение к интернету';
+			case 'errors.unknown': return 'Неопознанная ошибка';
 			case 'homepage.mytasks': return 'Мои задачи';
 			case 'homepage.done': return 'Выполнено';
 			case 'homepage.newtask': return 'Добавить';

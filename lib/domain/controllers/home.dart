@@ -9,35 +9,35 @@ import 'package:yss_todo/logger.dart';
 import 'package:yss_todo/domain/models/task.dart';
 
 import '../../constants.dart';
+import '../models/resstatuses.dart';
 
 class HomeController {
   var scrollControl = ScrollController();
 
   var taskList = <TaskModel>[].asObservable();
-  var revision = 0;
 
   var isComplitedVisible = false.obs();
 
   final _db = GetIt.I<TaskListDB>();
   final _api = GetIt.I<TasksAPI>();
 
+ final responceError = Observable(ResponseStatus.normal);
+
   HomeController._init();
 
   static Future<HomeController> init() async {
     var controller = HomeController._init();
     controller.taskList.addAll(await controller._db.getAll());
-    controller.updateTasks();
     return controller;
   }
 
-  void updateTasks() async {
+  void getTasks() async {
     Map<String, dynamic> res = await _api.getAll();
-    if (res['status'] == 'ok') {
-      revision = res['revision'];
+    if (res['status'] == ResponseStatus.normal) {
       taskList.addAll(res['tasks']);
-    }
-    else {
-
+    } else {
+      
+      runInAction(() => responceError.value = res['status']);
     }
   }
 
