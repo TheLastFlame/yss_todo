@@ -42,9 +42,11 @@ class HomeAppBar extends StatelessWidget {
           expandedHeight: screenThird,
 
           // Убирает кноку настроек
-          actions:[ appBarExpandProcent.value == 100
-              ? isDoneVisibilitySwitcher()
-              : settingsButton(appBarExpandProcent)],
+          actions: [
+            appBarExpandProcent.value == 100
+                ? isDoneVisibilitySwitcher()
+                : settingsButton(appBarExpandProcent)
+          ],
 
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: EdgeInsets.only(
