@@ -6,6 +6,7 @@ import 'package:yss_todo/domain/models/resstatuses.dart';
 import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/logger.dart';
 import 'package:yss_todo/ui/pages/home/widgets/appbar.dart';
+import 'package:yss_todo/ui/pages/home/widgets/syncindicator.dart';
 import 'package:yss_todo/ui/pages/home/widgets/tasklist.dart';
 
 import '../../../i18n/strings.g.dart';
@@ -59,21 +60,34 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     logger.i('Home page opening');
     return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () async => controller.getTasks(),
-        child: CustomScrollView(
-          controller: GetIt.I<HomeController>().scrollControl,
-          slivers: const [
-            HomeAppBar(),
-            TaskList(),
-      
-            //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
-            // 102 - высота FAB
-            SliverToBoxAdapter(
-              child: SizedBox(height: 102),
-            )
-          ],
-        ),
+      body: Stack(
+        children: [
+          RefreshIndicator(
+            onRefresh: () async => controller.getTasks(),
+            child: CustomScrollView(
+              controller: controller.scrollControl,
+              slivers: [
+                const HomeAppBar(),
+                const TaskList(),
+
+                //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
+                // 48 - высота FAB + 16 - высота отступа снизу + 16 - сверху + bottom navigation
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                      height: 70 +
+                          MediaQuery.systemGestureInsetsOf(context).bottom),
+                )
+              ],
+            ),
+          ),
+          const Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SyncIndicator(),
+              SyncIndicator(),
+            ],
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => taskCreatingDialog(context),

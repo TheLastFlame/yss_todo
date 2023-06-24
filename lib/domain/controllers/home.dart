@@ -11,6 +11,12 @@ import 'package:yss_todo/domain/models/task.dart';
 import '../../constants.dart';
 import '../models/resstatuses.dart';
 
+enum Action {
+  save,
+  getAll,
+  remove,
+}
+
 class HomeController {
   var scrollControl = ScrollController();
 
@@ -22,44 +28,67 @@ class HomeController {
   final _api = GetIt.I<TasksAPI>();
 
   final responceError = Observable(ResponseStatus.normal);
+  final lastAction = Observable(Action.getAll);
+  var isLoading = true.obs();
 
-  HomeController._init();
-
-  static Future<HomeController> init() async {
-    var controller = HomeController._init();
-    controller.taskList.addAll(await controller._db.getAll());
-    return controller;
+  HomeController() {
+    getTasks();
   }
 
   void getTasks() async {
+    runInAction(() => isLoading.value = true);
+    taskList.addAll(await _db.getAll());
     Map<String, dynamic> res = await _api.getAll();
+    runInAction(() => isLoading.value = false);
+
     if (res['status'] == ResponseStatus.normal) {
       taskList.clear();
       taskList.addAll(res['tasks']);
     } else {
-      runInAction(() => responceError.value = res['status']);
+      runInAction(() {
+        lastAction.value = Action.getAll;
+        responceError.value = res['status'];
+      });
     }
   }
 
-  void removeTask(String id) {
+  void removeTask(String id) async {
     logger.i('Task $id removing...');
     Timer(
       animationsDuration,
       () => taskList.removeWhere((element) => element.id == id),
     );
-    _api.deleteTask(id);
-    _db.remove(id);
+
+    runInAction(() => isLoading.value = true);
+    await _db.remove(id);
+    var resStatus = await _api.deleteTask(id);
+    runInAction(() => isLoading.value = false);
+
+    if (resStatus != ResponseStatus.normal) {
+      runInAction(() {
+        lastAction.value = Action.remove;
+        responceError.value = resStatus;
+      });
+    }
   }
 
-  void saveTask(TaskModel task, {bool isCreating = false}) {
+  void saveTask(TaskModel task, {bool isCreating = false}) async {
     logger.i('Task ${task.id} data saving...');
-    if (isCreating) {
-      _api.addTask(task);
-      Timer(animationsDuration, () => taskList.add(task));
-    } else {
-      _api.editTask(task);
-    }
+
+    runInAction(() => isLoading.value = true);
     _db.save(task);
+
+    if (isCreating) {
+      Timer(animationsDuration, () => taskList.add(task));
+      Timer(
+          animationsDuration * 2,
+          () => scrollControl.animateTo(scrollControl.position.maxScrollExtent,
+              duration: animationsDuration, curve: Curves.linear));
+      await _api.addTask(task);
+    } else {
+      await _api.editTask(task);
+    }
+    runInAction(() => isLoading.value = false);
   }
 
   void changeTaskStatus(TaskModel task) {

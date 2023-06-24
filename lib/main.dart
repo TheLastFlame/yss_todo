@@ -31,7 +31,7 @@ void main() async {
   logger.i('Controllers registration');
   GetIt.I.registerSingleton<MainController>(await MainController.init());
   GetIt.I.registerSingleton<TasksAPI>(await TasksAPI.init());
-  GetIt.I.registerSingleton<HomeController>(await HomeController.init());
+  GetIt.I.registerSingleton<HomeController>(HomeController());
 
   runApp(TranslationProvider(child: const MainApp()));
 }
