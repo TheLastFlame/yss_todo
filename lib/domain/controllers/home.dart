@@ -31,25 +31,27 @@ class HomeController {
   final lastAction = Observable(Action.getAll);
   var isLoading = true.obs();
 
-  HomeController() {
-    getTasks();
-  }
-
   void getTasks() async {
     runInAction(() => isLoading.value = true);
-    taskList.addAll(await _db.getAll());
+
+    var localData = await _db.getAll();
+    taskList.clear();
+    taskList.addAll(localData);
+
     Map<String, dynamic> res = await _api.getAll();
-    runInAction(() => isLoading.value = false);
 
     if (res['status'] == ResponseStatus.normal) {
       taskList.clear();
       taskList.addAll(res['tasks']);
+      _db.updateAll(taskList);
     } else {
       runInAction(() {
         lastAction.value = Action.getAll;
         responceError.value = res['status'];
       });
     }
+
+    runInAction(() => isLoading.value = false);
   }
 
   void removeTask(String id) async {
@@ -60,9 +62,9 @@ class HomeController {
     );
 
     runInAction(() => isLoading.value = true);
+
     await _db.remove(id);
     var resStatus = await _api.deleteTask(id);
-    runInAction(() => isLoading.value = false);
 
     if (resStatus != ResponseStatus.normal) {
       runInAction(() {
@@ -70,6 +72,8 @@ class HomeController {
         responceError.value = resStatus;
       });
     }
+
+    runInAction(() => isLoading.value = false);
   }
 
   void saveTask(TaskModel task, {bool isCreating = false}) async {

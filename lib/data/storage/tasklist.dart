@@ -39,7 +39,9 @@ class TaskListDBGetStorage implements TaskListDB {
   Future<void> updateAll(List<TaskModel> tasks) async {
     logger.w('Database erasering');
     await _taskStorage.erase();
-    tasks.map((e) => save(e));
+    for (var e in tasks) {
+      save(e);
+    }
   }
 
   static Future<TaskListDBGetStorage> init() async {
