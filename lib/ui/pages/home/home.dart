@@ -66,6 +66,7 @@ class _HomepageState extends State<Homepage> {
             onRefresh: () async => controller.getTasks(),
             child: CustomScrollView(
               controller: controller.scrollControl,
+              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 const HomeAppBar(),
                 const TaskList(),
