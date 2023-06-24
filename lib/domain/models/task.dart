@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import "package:mobx/mobx.dart";
-import 'package:yss_todo/data/api/api.dart';
+import 'package:yss_todo/domain/controllers/main.dart';
 import 'package:yss_todo/domain/models/priority.dart';
 import 'package:uuid/uuid.dart';
 // ignore: depend_on_referenced_packages
@@ -48,7 +48,7 @@ class TaskModel {
     done = Observable(isCompleted);
     created_at = createdAt ?? DateTime.now();
     changed_at = changedAt ?? DateTime.now();
-    last_updated_by = GetIt.I<TasksAPI>().deviceId;
+    last_updated_by = GetIt.I<MainController>().deviceId;
   }
 
   //ужаснейший код для автогена. честно говоря, гораздо проще было вручную написать. но интереса ради...

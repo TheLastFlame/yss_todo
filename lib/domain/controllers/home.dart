@@ -21,7 +21,7 @@ class HomeController {
   final _db = GetIt.I<TaskListDB>();
   final _api = GetIt.I<TasksAPI>();
 
- final responceError = Observable(ResponseStatus.normal);
+  final responceError = Observable(ResponseStatus.normal);
 
   HomeController._init();
 
@@ -34,9 +34,9 @@ class HomeController {
   void getTasks() async {
     Map<String, dynamic> res = await _api.getAll();
     if (res['status'] == ResponseStatus.normal) {
+      taskList.clear();
       taskList.addAll(res['tasks']);
     } else {
-      
       runInAction(() => responceError.value = res['status']);
     }
   }
@@ -47,12 +47,18 @@ class HomeController {
       animationsDuration,
       () => taskList.removeWhere((element) => element.id == id),
     );
+    _api.deleteTask(id);
     _db.remove(id);
   }
 
   void saveTask(TaskModel task, {bool isCreating = false}) {
     logger.i('Task ${task.id} data saving...');
-    if (isCreating) Timer(animationsDuration, () => taskList.add(task));
+    if (isCreating) {
+      _api.addTask(task);
+      Timer(animationsDuration, () => taskList.add(task));
+    } else {
+      _api.editTask(task);
+    }
     _db.save(task);
   }
 
