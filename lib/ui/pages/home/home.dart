@@ -26,7 +26,7 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     super.initState();
     controller = GetIt.I<HomeController>();
-    controller.getTasks();
+    controller.synchronization();
     logger.i('Init errors checker');
     errorHandler = autorun(
       (p0) {
@@ -38,7 +38,7 @@ class _HomepageState extends State<Homepage> {
               action: SnackBarAction(
                 label: t.commonwords.retry,
                 onPressed: () {
-                  controller.getTasks();
+                  controller.synchronization();
                 },
               ),
             ),
@@ -63,7 +63,7 @@ class _HomepageState extends State<Homepage> {
       body: Stack(
         children: [
           RefreshIndicator(
-            onRefresh: () async => controller.getTasks(),
+            onRefresh: () async => controller.synchronization(),
             child: CustomScrollView(
               controller: controller.scrollControl,
               physics: const AlwaysScrollableScrollPhysics(),

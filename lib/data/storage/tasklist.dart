@@ -4,6 +4,8 @@ import 'package:yss_todo/logger.dart';
 import '../../domain/models/task.dart';
 
 abstract interface class TaskListDB {
+  Future<bool> getSyncStatus();
+  Future<void> setSyncStatus(bool status);
   Future<void> save(TaskModel task);
   Future<void> remove(String taskID);
   Future<Iterable<TaskModel>> getAll();
@@ -12,6 +14,17 @@ abstract interface class TaskListDB {
 
 class TaskListDBGetStorage implements TaskListDB {
   final _taskStorage = GetStorage('TaskList');
+  final _syncStatus = GetStorage('SyncStatus');
+
+  @override
+  Future<bool> getSyncStatus() async {
+    return _syncStatus.read('SyncStatus') ?? true;
+  }
+
+  @override
+  Future<void> setSyncStatus(bool status) async {
+    _syncStatus.write('SyncStatus', status);
+  }
 
   @override
   Future<void> save(TaskModel task) async {
@@ -29,10 +42,11 @@ class TaskListDBGetStorage implements TaskListDB {
   Future<Iterable<TaskModel>> getAll() async {
     logger.i('Getting a list of saved tasks...');
     List values = _taskStorage.getValues().toList();
+    if (values.isEmpty) return [];
     logger.i(values);
     return values.map(
-      (e) => TaskModel.fromJson(e),
-    );
+          (e) => TaskModel.fromJson(e),
+        );
   }
 
   @override
@@ -46,6 +60,7 @@ class TaskListDBGetStorage implements TaskListDB {
 
   static Future<TaskListDBGetStorage> init() async {
     await GetStorage.init('TaskList');
+    await GetStorage.init('SyncStatus');
     return TaskListDBGetStorage();
   }
 }

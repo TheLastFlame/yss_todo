@@ -12,7 +12,8 @@ import '../../constants.dart';
 import '../models/resstatuses.dart';
 
 enum Action {
-  save,
+  add,
+  edit,
   getAll,
   remove,
 }
@@ -31,19 +32,26 @@ class HomeController {
   final lastAction = Observable(Action.getAll);
   var isLoading = true.obs();
 
-  void getTasks() async {
+  HomeController._init();
+
+  static Future<HomeController> init() async {
+    var controller = HomeController._init();
+    controller.taskList.addAll(await controller._db.getAll());
+    return controller;
+  }
+
+  void synchronization() async {
     runInAction(() => isLoading.value = true);
 
-    var localData = await _db.getAll();
-    taskList.clear();
-    taskList.addAll(localData);
-
-    Map<String, dynamic> res = await _api.getAll();
+    Map<String, dynamic> res = await (await _db.getSyncStatus()
+        ? _api.getAll()
+        : _api.updateAll(taskList));
 
     if (res['status'] == ResponseStatus.normal) {
       taskList.clear();
       taskList.addAll(res['tasks']);
       _db.updateAll(taskList);
+      _db.setSyncStatus(true);
     } else {
       runInAction(() {
         lastAction.value = Action.getAll;
@@ -68,6 +76,7 @@ class HomeController {
 
     if (resStatus != ResponseStatus.normal) {
       runInAction(() {
+        _db.setSyncStatus(false);
         lastAction.value = Action.remove;
         responceError.value = resStatus;
       });
@@ -82,15 +91,20 @@ class HomeController {
     runInAction(() => isLoading.value = true);
     _db.save(task);
 
+    ResponseStatus res;
+
     if (isCreating) {
       Timer(animationsDuration, () => taskList.add(task));
       Timer(
           animationsDuration * 2,
           () => scrollControl.animateTo(scrollControl.position.maxScrollExtent,
               duration: animationsDuration, curve: Curves.linear));
-      await _api.addTask(task);
+      res = await _api.addTask(task);
     } else {
-      await _api.editTask(task);
+      res = await _api.editTask(task);
+    }
+    if (res != ResponseStatus.normal) {
+      _db.setSyncStatus(false);
     }
     runInAction(() => isLoading.value = false);
   }
