@@ -20,6 +20,7 @@ enum Action {
 
 class HomeController {
   var scrollControl = ScrollController();
+  var appBarExpandProcent = 0.0.obs();
 
   var taskList = <TaskModel>[].asObservable();
 
