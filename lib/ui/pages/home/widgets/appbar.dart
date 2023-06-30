@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:yss_todo/controllers/home.dart';
+import 'package:yss_todo/domain/controllers/home.dart';
 
-import '../../../constants.dart';
-import '../../../helpers.dart';
-import '../../../i18n/strings.g.dart';
+import '../../../../constants.dart';
+import '../../../../helpers.dart';
+import '../../../../i18n/strings.g.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -42,9 +42,11 @@ class HomeAppBar extends StatelessWidget {
           expandedHeight: screenThird,
 
           // Убирает кноку настроек
-          actions:[ appBarExpandProcent.value == 100
-              ? isDoneVisibilitySwitcher()
-              : settingsButton(appBarExpandProcent)],
+          actions: [
+            appBarExpandProcent.value == 100
+                ? isDoneVisibilitySwitcher()
+                : settingsButton(appBarExpandProcent)
+          ],
 
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: EdgeInsets.only(
@@ -74,7 +76,7 @@ class HomeAppBar extends StatelessWidget {
                       opacity: lerp(1, 0, appBarExpandProcent.value),
                       duration: animationsDuration,
                       child: Text(
-                          '${t.homepage.done}: ${GetIt.I<HomeController>().taskList.where((e) => e.isCompleted.value).length}'),
+                          '${t.homepage.done}: ${GetIt.I<HomeController>().taskList.where((e) => e.done.value).length}'),
                     ),
                     isDoneVisibilitySwitcher(),
                   ],

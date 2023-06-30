@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../constants.dart';
-import '../../../controllers/home.dart';
-import '../../../helpers.dart';
-import '../../../i18n/strings.g.dart';
-import '../../../models/task.dart';
+import '../../../../constants.dart';
+import '../../../../domain/controllers/home.dart';
+import '../../../../helpers.dart';
+import '../../../../i18n/strings.g.dart';
+import '../../../../domain/models/task.dart';
 
 class TaskDeleteButton extends StatelessWidget {
   const TaskDeleteButton({
@@ -26,11 +26,11 @@ class TaskDeleteButton extends StatelessWidget {
         onTap: () => confirm(context).then(
           (value) {
             if (value) {
-              Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
+              Navigator.of(context).pop();
               GetIt.I<HomeController>().removeTask(model.id);
             }
           },
-        ),  
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
               vertical: appPadding * 3, horizontal: appPadding * 1.5),

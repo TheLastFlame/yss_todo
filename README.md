@@ -61,6 +61,3 @@
 Для самостоятельной сборки необходимо указать переменные host и token с помощью Dart define
 
 Пример команды: <code>flutter build apk --split-per-abi --dart-define TOKEN=your_token --dart-define HOST=https://google.com</code>
-
-
-

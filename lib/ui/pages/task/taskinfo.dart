@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/constants.dart';
-import 'package:yss_todo/controllers/task.dart';
+import 'package:yss_todo/domain/controllers/task.dart';
 import 'package:yss_todo/logger.dart';
-import 'package:yss_todo/models/task.dart';
-import 'package:yss_todo/pages/task/widgets/appbar.dart';
-import 'package:yss_todo/pages/task/widgets/datepicker.dart';
-import 'package:yss_todo/pages/task/widgets/priorityswitcher.dart';
-import 'package:yss_todo/pages/task/widgets/taskdeletebtn.dart';
+import 'package:yss_todo/domain/models/task.dart';
+import 'package:yss_todo/ui/pages/task/widgets/appbar.dart';
+import 'package:yss_todo/ui/pages/task/widgets/datepicker.dart';
+import 'package:yss_todo/ui/pages/task/widgets/priorityswitcher.dart';
+import 'package:yss_todo/ui/pages/task/widgets/taskdeletebtn.dart';
 
-import '../../controllers/home.dart';
-import '../../i18n/strings.g.dart';
+import '../../../domain/controllers/home.dart';
+import '../../../i18n/strings.g.dart';
 
 // Страница используется как для отображения диалога нового таска так и для
 // отображения информации о существующего таска

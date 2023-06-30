@@ -6,12 +6,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yss_todo/constants.dart';
-import 'package:yss_todo/controllers/home.dart';
+import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
-import 'package:yss_todo/models/priority.dart';
-import 'package:yss_todo/models/task.dart';
+import 'package:yss_todo/domain/models/priority.dart';
+import 'package:yss_todo/domain/models/task.dart';
 
-import '../../../i18n/strings.g.dart';
+import '../../../../i18n/strings.g.dart';
 
 import 'package:intl/intl.dart';
 
@@ -31,7 +31,7 @@ class Task extends StatelessWidget {
           : BorderRadius.zero,
       child: Observer(builder: (_) {
         return Dismissible(
-          background: task.isCompleted.value
+          background: task.done.value
               ? DismisBackground(
                   iconBoxSize: iconBoxSize,
                   icon: Icons.close,
@@ -61,7 +61,7 @@ class Task extends StatelessWidget {
                   2,
             );
           },
-          key: task.id,
+          key: ValueKey(task.id),
           dismissThresholds: const {
             DismissDirection.endToStart: 0.3,
             DismissDirection.startToEnd: 0.3
@@ -121,12 +121,12 @@ class TaskTile extends StatelessWidget {
                 padding: const EdgeInsets.all(appPadding / 2),
                 child: Checkbox(
                   // activeColor: Colors.green, хз, оно стрёмное
-                  side: task.priority.value.index > 1
+                  side: task.importance.value.index > 1
                       ? const BorderSide(color: Colors.red, width: 2)
                       : null,
                   onChanged: (val) =>
                       runInAction(() => controller.changeTaskStatus(task)),
-                  value: task.isCompleted.value,
+                  value: task.done.value,
                 ),
               ),
               // Иконка важности
@@ -134,10 +134,10 @@ class TaskTile extends StatelessWidget {
                 duration: animationsDuration,
                 alignment: Alignment.centerLeft,
                 child: SizedBox(
-                  child: !task.isCompleted.value
+                  child: !task.done.value
                       ? Icon(
-                          task.priority.value.icon,
-                          color: task.priority.value.color,
+                          task.importance.value.icon,
+                          color: task.importance.value.color,
                         )
                       : null,
                 ),
@@ -147,14 +147,14 @@ class TaskTile extends StatelessWidget {
           contentPadding: const EdgeInsets.all(appPadding),
 
           title: Text(
-            task.name.value ?? '',
+            task.text.value ?? '',
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               decoration:
-                  task.isCompleted.value ? TextDecoration.lineThrough : null,
-              color: task.isCompleted.value
+                  task.done.value ? TextDecoration.lineThrough : null,
+              color: task.done.value
                   ? Theme.of(context).colorScheme.onBackground.withOpacity(0.6)
                   : null,
             ),
@@ -168,11 +168,11 @@ class TaskTile extends StatelessWidget {
               arguments: {'id': task.id},
             ),
           ),
-          subtitle: task.dueDate.value != null
+          subtitle: task.deadline.value != null
               ? Text(
-                  '${t.taskpage.until_short}: ${DateFormat.yMMMMd().format(task.dueDate.value!)}',
+                  '${t.taskpage.until_short}: ${DateFormat.yMMMMd().format(task.deadline.value!)}',
                   style: TextStyle(
-                    color: task.isCompleted.value
+                    color: task.done.value
                         ? Theme.of(context)
                             .colorScheme
                             .onBackground
