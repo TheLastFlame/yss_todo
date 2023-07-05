@@ -21,16 +21,14 @@ class TaskModel {
 
   late Observable<bool> done;
 
-  @JsonKey(toJson: _dtToJson, fromJson: _dtFromJson)
-  // ignore: non_constant_identifier_names
-  late DateTime? created_at;
+  @JsonKey(toJson: _dtToJson, fromJson: _dtFromJson, name: 'created_at')
+  late DateTime? createdAt;
 
-  @JsonKey(toJson: _dtToJson, fromJson: _dtFromJson)
-  // ignore: non_constant_identifier_names
-  late DateTime? changed_at;
+  @JsonKey(toJson: _dtToJson, fromJson: _dtFromJson, name: 'changed_at')
+  late DateTime? changedAt;
 
-  // ignore: non_constant_identifier_names
-  late String last_updated_by;
+  @JsonKey(name: 'last_updated_by')
+  late String lastUpdatedBy;
 
   TaskModel(
       {id,
@@ -46,9 +44,9 @@ class TaskModel {
     deadline = Observable(dueDate);
     importance = Observable(priority);
     done = Observable(isCompleted);
-    created_at = createdAt ?? DateTime.now();
-    changed_at = changedAt ?? DateTime.now();
-    last_updated_by = GetIt.I<MainController>().deviceId;
+    this.createdAt = createdAt ?? DateTime.now();
+    this.changedAt = changedAt ?? DateTime.now();
+    lastUpdatedBy = GetIt.I<MainController>().deviceId;
   }
 
   //ужаснейший код для автогена. честно говоря, гораздо проще было вручную написать. но интереса ради...
