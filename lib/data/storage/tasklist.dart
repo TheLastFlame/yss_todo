@@ -6,6 +6,10 @@ import '../../domain/models/task.dart';
 abstract interface class TaskListDB {
   Future<bool> getSyncStatus();
   Future<void> setSyncStatus(bool status);
+  Future<void> addToRemove(String taskId, DateTime time);
+  Future<Map<String, DateTime>> getRemoveList();
+  Future<void> eraseRemoveList();
+
   Future<void> save(TaskModel task);
   Future<void> remove(String taskID);
   Future<Iterable<TaskModel>> getAll();
@@ -14,16 +18,41 @@ abstract interface class TaskListDB {
 
 class TaskListDBGetStorage implements TaskListDB {
   final _taskStorage = GetStorage('TaskList');
-  final _syncStatus = GetStorage('SyncStatus');
+  final _syncStorage = GetStorage('SyncStatus');
 
   @override
   Future<bool> getSyncStatus() async {
-    return _syncStatus.read('SyncStatus') ?? true;
+    return _syncStorage.read('SyncStatus') ?? true;
   }
 
   @override
   Future<void> setSyncStatus(bool status) async {
-    _syncStatus.write('SyncStatus', status);
+    _syncStorage.write('SyncStatus', status);
+  }
+
+  @override
+  Future<void> addToRemove(String taskId, DateTime time) async {
+    _syncStorage.write(taskId, time.toString());
+  }
+
+  @override
+  Future<Map<String, DateTime>> getRemoveList() async {
+    List keys = _syncStorage.getKeys().toList();
+    Map<String, DateTime> values = {
+      for (var key in keys)
+        key: DateTime.tryParse(_syncStorage.read(key).toString()) ?? DateTime.now()
+    };
+    values.remove('SyncStatus');
+    if (values.isEmpty) return {};
+    logger.i(values);
+    return values;
+  }
+
+  @override
+  Future<void> eraseRemoveList() async {
+    var status = await getSyncStatus();
+    _syncStorage.erase();
+    setSyncStatus(status);
   }
 
   @override
@@ -45,8 +74,8 @@ class TaskListDBGetStorage implements TaskListDB {
     if (values.isEmpty) return [];
     logger.i(values);
     return values.map(
-          (e) => TaskModel.fromJson(e),
-        );
+      (e) => TaskModel.fromJson(e),
+    );
   }
 
   @override

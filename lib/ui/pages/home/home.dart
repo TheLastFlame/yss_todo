@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -34,9 +35,21 @@ class _HomepageState extends State<Homepage> {
       (p0) {
         if (controller.responceError.value != ResponseStatus.normal) {
           logger.e(controller.responceError.value.toString());
+          String text;
+          switch (controller.responceError.value) {
+            case ResponseStatus.noInternet:
+              text = t.errors.no_internet;
+              break;
+            case ResponseStatus.iternalProblem:
+              text = t.errors.iternal;
+              break;
+            default:
+              text = t.errors.unknown;
+          }
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(controller.responceError.value.text),
+              content: Text(text),
               action: SnackBarAction(
                 label: t.commonwords.retry,
                 onPressed: () {
@@ -45,6 +58,12 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
           );
+
+          //По неизвестной мне причине SnackBar перестал закрываться самостоятельно. Пофиксить не удалось. Костыль:
+          Timer(const Duration(seconds: 5), () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          });
+
           controller.responceError.value = ResponseStatus.normal;
         }
       },
