@@ -15,24 +15,21 @@ import '../../../i18n/strings.g.dart';
 // Страница используется как для отображения диалога нового таска так и для
 // отображения информации о существующего таска
 class TaskPage extends StatelessWidget {
-  const TaskPage({super.key});
+  const TaskPage({super.key, this.taskId});
+
+  final String? taskId; 
 
   @override
   Widget build(BuildContext context) {
     logger.i('Opening the task page');
-    // получаем id
-    final arguments = ModalRoute.of(context)?.settings.arguments;
-
-    // если id отсутствует, то страница считается страницей создания таска
-    var id = arguments != null ? (arguments as Map)['id'] : null;
-    
-    var task = id != null
+        
+    var task = taskId != null
         ? GetIt.I<HomeController>()
             .taskList
-            .firstWhere((element) => element.id == id)
+            .firstWhere((element) => element.id == taskId)
         : TaskModel();
 
-    logger.i(id == null ? 'Its new task' : 'Task id: $id');
+    logger.i(taskId == null ? 'Its new task' : 'Task id: $taskId');
 
     logger.i('Task controller initialization');
     var controller = TaskController(task);
@@ -74,8 +71,8 @@ class TaskPage extends StatelessWidget {
                   DueDatePicker(controller: controller),
                   
                   // Если это страница существующего таска отображаем кнопку удаления
-                  if (id != null) const Divider(height: 0),
-                  if (id != null) TaskDeleteButton(model: task),
+                  if (taskId != null) const Divider(height: 0),
+                  if (taskId != null) TaskDeleteButton(model: task),
                 ],
               ),
             ),

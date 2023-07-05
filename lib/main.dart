@@ -7,10 +7,10 @@ import 'package:yss_todo/data/storage/tasklist.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/domain/controllers/main.dart';
 import 'package:yss_todo/logger.dart';
-import 'package:yss_todo/ui/pages/home/home.dart';
-import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 
 import 'i18n/strings.g.dart';
+import 'navigation/route_information_parser.dart';
+import 'navigation/router_delegate.dart';
 
 void main() async {
   logger.i(
@@ -32,8 +32,9 @@ void main() async {
   GetIt.I.registerSingleton<MainController>(await MainController.init());
   GetIt.I.registerSingleton<TasksAPI>(await TasksAPI.init());
   GetIt.I.registerSingleton<HomeController>(await HomeController.init());
+  GetIt.I.registerSingleton<MyRouterDelegate>(MyRouterDelegate());
 
-  runApp(TranslationProvider(child: const MainApp()));
+  runApp(TranslationProvider(child: MainApp()));
 }
 
 void settingUpSystemUIOverlay() {
@@ -47,12 +48,13 @@ void settingUpSystemUIOverlay() {
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
+  final parser = MyRouteInformationParser();
 
   @override
   Widget build(BuildContext context) {
     logger.i('The application has been started');
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(useMaterial3: true),
@@ -62,12 +64,8 @@ class MainApp extends StatelessWidget {
       locale: TranslationProvider.of(context).flutterLocale,
       supportedLocales: AppLocaleUtils.supportedLocales,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
-
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const Homepage(),
-        '/task': (context) => const TaskPage(),
-      },
+      routerDelegate: GetIt.I<MyRouterDelegate>(),
+      routeInformationParser: parser,
     );
   }
 }
