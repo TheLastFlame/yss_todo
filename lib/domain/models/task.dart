@@ -33,7 +33,6 @@ class TaskModel {
   TaskModel(
       {id,
       name,
-      description,
       dueDate,
       priority = Priority.basic,
       isCompleted = false,

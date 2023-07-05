@@ -4,9 +4,30 @@ import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/logger.dart';
 import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 import 'constants.dart';
+import 'domain/models/task.dart';
 import 'i18n/strings.g.dart';
 
 double lerp(start, end, procent) => start + (end - start) * procent / 100;
+
+// мердж трёх списков
+List<TaskModel> mergeLists(List<TaskModel> list1, List<TaskModel> list2,
+    Map<String, DateTime> removeList) {
+  final Map<String, TaskModel> map = {};
+
+  for (final task in list1 + list2) {
+    if (removeList.containsKey(task.id)) {
+      if (task.changedAt!.isBefore(removeList[task.id]!)) continue;
+    }
+
+    if (map.containsKey(task.id)) {
+      if (task.changedAt!.isBefore(map[task.id]!.changedAt!)) continue;
+    }
+
+    map[task.id] = task;
+  }
+
+  return map.values.toList();
+}
 
 // Вызывает диалог подтверждения
 Future<bool> confirm(context) async {
@@ -21,7 +42,7 @@ Future<bool> confirm(context) async {
           onPressed: () => Navigator.of(context).pop(),
           child: Text(t.commonwords.cancel),
         ),
-        FilledButton  (
+        FilledButton(
           onPressed: () {
             result = true;
             Navigator.of(context).pop();

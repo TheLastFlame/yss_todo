@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yss_todo/data/api/api.dart';
+import 'package:yss_todo/data/storage/sync.dart';
 import 'package:yss_todo/data/storage/tasklist.dart';
 import 'package:yss_todo/logger.dart';
 import 'package:yss_todo/domain/models/task.dart';
 
 import '../../constants.dart';
+import '../../helpers.dart';
 import '../models/resstatuses.dart';
 
 class HomeController {
@@ -20,6 +22,7 @@ class HomeController {
   var isComplitedVisible = false.obs();
 
   final _db = GetIt.I<TaskListDB>();
+  final _sync = GetIt.I<SyncStorage>();
   final _api = GetIt.I<TasksAPI>();
 
   final responceError = Observable(ResponseStatus.normal);
@@ -33,35 +36,16 @@ class HomeController {
     return controller;
   }
 
-  List<TaskModel> _mergeLists(List<TaskModel> list1, List<TaskModel> list2,
-      Map<String, DateTime> removeList) {
-    final Map<String, TaskModel> map = {};
-
-    for (final task in list1 + list2) {
-      if (removeList.containsKey(task.id)) {
-        if (task.changedAt!.isBefore(removeList[task.id]!)) continue;
-      }
-
-      if (map.containsKey(task.id)) {
-        if (task.changedAt!.isBefore(map[task.id]!.changedAt!)) continue;
-      }
-
-      map[task.id] = task;
-    }
-
-    return map.values.toList();
-  }
-
   void synchronization() async {
     runInAction(() => isLoading.value = true);
 
     Map<String, dynamic> res = await _api.getAll();
 
     if (res['status'] == ResponseStatus.normal) {
-      if (!(await _db.getSyncStatus())) {
+      if (!(await _sync.getSyncStatus())) {
         res = await _api.updateAll(
-          _mergeLists(
-              taskList, res['tasks'].toList(), await _db.getRemoveList()),
+          mergeLists(
+              taskList, res['tasks'].toList(), await _sync.getRemoveList()),
         );
         if (res['status'] != ResponseStatus.normal) {
           responceError.value = res['status'];
@@ -72,7 +56,7 @@ class HomeController {
       taskList.clear();
       taskList.addAll(res['tasks']);
       _db.updateAll(taskList);
-      _db.setSyncStatus(true);
+      _sync.setSyncStatus(true);
     } else {
       runInAction(() {
         responceError.value = res['status'];
@@ -95,8 +79,8 @@ class HomeController {
     var resStatus = await _api.deleteTask(id);
 
     if (resStatus != ResponseStatus.normal) {
-      _db.setSyncStatus(false);
-      _db.addToRemove(id, DateTime.now());
+      _sync.setSyncStatus(false);
+      _sync.addToRemove(id, DateTime.now());
       runInAction(() {
         responceError.value = resStatus;
       });
@@ -124,7 +108,7 @@ class HomeController {
       res = await _api.editTask(task);
     }
     if (res != ResponseStatus.normal) {
-      _db.setSyncStatus(false);
+      _sync.setSyncStatus(false);
       runInAction(() => responceError.value = res);
     }
     runInAction(() => isLoading.value = false);

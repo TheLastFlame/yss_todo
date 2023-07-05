@@ -28,9 +28,9 @@ class MainController {
   late final String deviceId;
   MainController._init();
 
-  static Future<MainController> init() async {
+  static Future<MainController> init({bool isTest = false}) async {
     var controller = MainController._init();
-    controller.deviceId = await _getId();
+    controller.deviceId = isTest ? 'test' : await _getId();
     return controller;
   }
 }

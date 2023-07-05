@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/data/api/api.dart';
+import 'package:yss_todo/data/storage/sync.dart';
 import 'package:yss_todo/data/storage/tasklist.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/domain/controllers/main.dart';
@@ -27,6 +28,8 @@ void main() async {
   logger.i('Storage initialization');
   // await GetStorage.init('Settings');
   GetIt.I.registerSingleton<TaskListDB>(await TaskListDBGetStorage.init());
+  GetIt.I.registerSingleton<SyncStorage>(await SyncStorageGetStorage.init());
+
 
   logger.i('Controllers registration');
   GetIt.I.registerSingleton<MainController>(await MainController.init());
