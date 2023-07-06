@@ -124,6 +124,7 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        key: const ValueKey('FAB'),
         onPressed: () => taskCreatingDialog(context),
         child: const Icon(Icons.add),
       ),

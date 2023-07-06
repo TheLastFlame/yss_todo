@@ -54,6 +54,7 @@ class TaskPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: appPadding * 2),
                       child: TextField(
+                        key: const ValueKey('NameForm'),
                         minLines: 5,
                         maxLines: null,
                         controller: controller.nameControl,
