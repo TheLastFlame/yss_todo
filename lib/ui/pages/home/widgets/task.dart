@@ -10,6 +10,7 @@ import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/domain/models/priority.dart';
 import 'package:yss_todo/domain/models/task.dart';
+import 'package:yss_todo/navigation/router_delegate.dart';
 
 import '../../../../i18n/strings.g.dart';
 
@@ -108,8 +109,7 @@ class TaskTile extends StatelessWidget {
               ? const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(13)))
               : null,
-          onTap: () => Navigator.of(context)
-              .pushNamed('/task', arguments: {'id': task.id}),
+          onTap: () => GetIt.I<MyRouterDelegate>().showTaskPage(task.id),
 
           // Изменение афигеннейших, просто лучших отступов, которые ска разные на разных платформах (гении, лять)
           visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
@@ -152,8 +152,7 @@ class TaskTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              decoration:
-                  task.done.value ? TextDecoration.lineThrough : null,
+              decoration: task.done.value ? TextDecoration.lineThrough : null,
               color: task.done.value
                   ? Theme.of(context).colorScheme.onBackground.withOpacity(0.6)
                   : null,
@@ -163,10 +162,7 @@ class TaskTile extends StatelessWidget {
           // Иконка информации
           trailing: IconButton(
             icon: const Icon(Icons.info_outline),
-            onPressed: () => Navigator.of(context).pushNamed(
-              '/task',
-              arguments: {'id': task.id},
-            ),
+            onPressed: () => GetIt.I<MyRouterDelegate>().showTaskPage(task.id),
           ),
           subtitle: task.deadline.value != null
               ? Text(

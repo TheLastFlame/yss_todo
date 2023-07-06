@@ -15,22 +15,8 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController scrollControl =
-        GetIt.I<HomeController>().scrollControl;
 
-    // Процент раскрытия аппбара от 0 до 100
-    var appBarExpandProcent = 0.0.obs();
-
-    // Треть экрана
-    final screenThird = MediaQuery.sizeOf(context).height / 3;
-
-    scrollControl.addListener(
-      () => runInAction(() => appBarExpandProcent.value =
-          scrollControl.offset > screenThird - 56
-              ? 100
-              : scrollControl.offset / (screenThird - 56) * 100),
-      //144 это expandedHeight - 56 (высота свёрнутого аппбара)
-    );
+    final appBarExpandProcent = GetIt.I<HomeController>().appBarExpandProcent;
 
     return Observer(
       builder: (_) {
@@ -39,7 +25,7 @@ class HomeAppBar extends StatelessWidget {
           shadowColor: Theme.of(context).colorScheme.shadow,
 
           pinned: true,
-          expandedHeight: screenThird,
+          expandedHeight: MediaQuery.sizeOf(context).height / 3,
 
           // Убирает кноку настроек
           actions: [

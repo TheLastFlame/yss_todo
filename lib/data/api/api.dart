@@ -42,6 +42,42 @@ class TasksAPI {
     }
   }
 
+  Future<Map<String, dynamic>> updateAll(List<TaskModel> tasks) async {
+    try {
+      var res = await http.patch(
+        Uri.parse('$host/list'),
+        headers: {
+          "Authorization": token,
+          'X-Last-Known-Revision': lastKnownRevision
+        },
+        body: '{"list": [${tasks.map(
+              (e) => jsonEncode(e.toJson()),
+            ).join(", ")}]}',
+      );
+      switch (res.statusCode) {
+        case 200:
+          final Map<String, dynamic> json = jsonDecode(res.body);
+          lastKnownRevision = json['revision'].toString();
+          return {
+            'status': ResponseStatus.normal,
+            'tasks': (json['list'] as List).map((e) => TaskModel.fromJson(e)),
+          };
+        case 500:
+          return {
+            'status': ResponseStatus.iternalProblem,
+          };
+        default:
+          return {
+            'status': ResponseStatus.badRequest,
+          };
+      }
+    } catch (e) {
+      return {
+        'status': ResponseStatus.noInternet,
+      };
+    }
+  }
+
   Future<ResponseStatus> addTask(TaskModel task) async {
     try {
       var res = await http.post(
@@ -80,7 +116,7 @@ class TasksAPI {
       switch (res.statusCode) {
         case 200:
           final Map<String, dynamic> json = jsonDecode(res.body);
-          lastKnownRevision = json['revision'].toString(); 
+          lastKnownRevision = json['revision'].toString();
           return ResponseStatus.normal;
         case 500:
           return ResponseStatus.iternalProblem;

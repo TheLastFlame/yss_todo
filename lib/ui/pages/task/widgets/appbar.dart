@@ -26,6 +26,7 @@ class TaskAppBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: appPadding * 3),
           child: TextButton(
+            key: const ValueKey('SaveBtn'),
               onPressed: () {
                 Navigator.pop(context);
                 controller.saveData();
