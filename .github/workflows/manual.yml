@@ -5,16 +5,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-11
     steps:
     - name: Firebase config
-      run: touch -c ./lib/firebase_options.dart
+      run: touch ./lib/firebase_options.dart
     - env:
         OPTIONS: ${{secrets.FIREBASE_OPTIONS}}
       run: |
         echo $OPTIONS > ./lib/firebase_options.dart
 
-    - run: touch -c ./android/app/google-services.json
+    - run: touch ./android/app/google-services.json
     - run: echo ${{secrets.GOOGLE_SERVICES_ANDROID}} > ./android/app/google-services.json
 
 
