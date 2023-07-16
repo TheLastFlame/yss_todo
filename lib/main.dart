@@ -35,7 +35,7 @@ void main() async {
   logger.i('Storage initialization');
   // await GetStorage.init('Settings');
   GetIt.I.registerSingleton<TaskListDB>(await TaskListDBGetStorage.init());
-  GetIt.I.registerSingleton<SyncStorage>(await SyncStorageGetStorage.init());
+  GetIt.I.registerSingleton<SyncStorage>(await SyncStorageGetStorage().init());
 
   logger.i('Controllers registration');
   GetIt.I.registerSingleton<MainController>(await MainController.init());
