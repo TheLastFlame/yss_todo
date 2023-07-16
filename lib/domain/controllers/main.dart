@@ -5,6 +5,13 @@ import 'package:flutter/foundation.dart';
 
 Future<String> _getId() async {
   var deviceInfo = DeviceInfoPlugin();
+  if (kIsWeb) {
+    // The web doesnt have a device UID, so use a combination fingerprint
+    WebBrowserInfo webInfo = await deviceInfo.webBrowserInfo;
+    return (webInfo.vendor ?? '') +
+        (webInfo.userAgent ?? '') +
+        webInfo.hardwareConcurrency.toString();
+  }
   if (Platform.isIOS) {
     var iosDeviceInfo = await deviceInfo.iosInfo;
     return iosDeviceInfo.identifierForVendor ?? 'undefined IOS';
@@ -14,12 +21,6 @@ Future<String> _getId() async {
   } else if (Platform.isWindows) {
     var windowsDeviceInfo = await deviceInfo.windowsInfo;
     return windowsDeviceInfo.productId;
-  } else if (kIsWeb) {
-    // The web doesnt have a device UID, so use a combination fingerprint
-    WebBrowserInfo webInfo = await deviceInfo.webBrowserInfo;
-    return (webInfo.vendor ?? '') +
-        (webInfo.userAgent ?? '') +
-        webInfo.hardwareConcurrency.toString();
   }
   return 'unknown';
 }
