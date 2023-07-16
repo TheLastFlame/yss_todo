@@ -74,7 +74,7 @@ android {
 
         dev {
             dimension "default"
-            resValue "string", "appNameFlavor", "yss_todo [dev]"
+            resValue "string", "appNameFlavor", "[dev] yss_todo"
             applicationIdSuffix ".dev"
 
         }
