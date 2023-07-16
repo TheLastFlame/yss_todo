@@ -81,6 +81,7 @@ class _HomepageState extends State<Homepage> {
     logger.i('Home page opening');
 
     return Scaffold(
+      appBar: AppBar(toolbarHeight: 0, forceMaterialTransparency: true),
       body: Stack(
         children: [
           isTablet(context)
