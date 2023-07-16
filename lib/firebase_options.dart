@@ -56,7 +56,7 @@ class DefaultFirebaseOptions {
     apiKey: String.fromEnvironment('API_KEY'),
     appId: String.fromEnvironment('APP_ID'),
     messagingSenderId: String.fromEnvironment('MESSAGING_SENDER_ID'),
-    projectId: String.fromEnvironment('PROJECT_ID'),
-    storageBucket: String.fromEnvironment('STORAGE_BUCKET'),
+    projectId: 'yss-todo',
+    storageBucket: 'yss-todo.appspot.com',
   );
 }
