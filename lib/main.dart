@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/domain/controllers/main.dart';
 import 'package:yss_todo/logger.dart';
 
+import 'firebase_options.dart';
 import 'i18n/strings.g.dart';
 import 'navigation/route_information_parser.dart';
 import 'navigation/router_delegate.dart';
@@ -20,6 +22,10 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
+
   logger.i('Getting the system locale');
   LocaleSettings.useDeviceLocale();
 
@@ -29,7 +35,6 @@ void main() async {
   // await GetStorage.init('Settings');
   GetIt.I.registerSingleton<TaskListDB>(await TaskListDBGetStorage.init());
   GetIt.I.registerSingleton<SyncStorage>(await SyncStorageGetStorage.init());
-
 
   logger.i('Controllers registration');
   GetIt.I.registerSingleton<MainController>(await MainController.init());
@@ -42,10 +47,12 @@ void main() async {
 
 void settingUpSystemUIOverlay() {
   logger.i("Setting SysemUIOverlay to transparent");
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      systemStatusBarContrastEnforced: false,
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarDividerColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+        systemStatusBarContrastEnforced: false,
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent),
+  );
   logger.i("Setting SystemUiMode to full screen");
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 }

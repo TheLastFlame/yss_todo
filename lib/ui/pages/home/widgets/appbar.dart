@@ -87,14 +87,14 @@ class HomeAppBar extends StatelessWidget {
           child: InkWell(
             borderRadius:
                 const BorderRadius.only(bottomLeft: Radius.circular(90)),
-            onTap: () {},
+            onTap: () => throw Exception(),
             child: const SizedBox(
               height: 56,
               width: 56,
               child: Padding(
                 padding:
                     EdgeInsets.only(bottom: appPadding, left: appPadding * 2),
-                child: Icon(Icons.settings),
+                child: Icon(Icons.warning_amber),
               ),
             ),
           )),

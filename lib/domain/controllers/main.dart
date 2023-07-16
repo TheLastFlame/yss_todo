@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'package:yss_todo/logger.dart';
 
 Future<String> _getId() async {
   var deviceInfo = DeviceInfoPlugin();
@@ -27,7 +29,23 @@ Future<String> _getId() async {
 
 class MainController {
   late final String deviceId;
-  MainController._init();
+
+  static void _initCrashlytics() {
+    FlutterError.onError = (errorDetails) {
+      logger.e('onError in Flutter');
+      FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+    };
+    PlatformDispatcher.instance.onError = (error, stack) {
+      logger.e('onError in PlatformDispatcher');
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+    logger.i('Crashlytics inited');
+  }
+
+  MainController._init() {
+    _initCrashlytics();
+  }
 
   static Future<MainController> init({bool isTest = false}) async {
     var controller = MainController._init();
