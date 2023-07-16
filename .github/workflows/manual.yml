@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: echo ${{ github.workspace }}
+    - run: touch ./android/app/google-services.json
+    - run: echo ${{secrets.GOOGLE_SERVICES_ANDROID}} > ./android/app/google-services.json
+
     - name: Firebase config
       run: touch ./lib/firebase_options.dart
     
@@ -15,8 +18,6 @@ jobs:
         OPTIONS: ${{secrets.FIREBASE_OPTIONS}}
       run: |
         echo $OPTIONS > ./lib/firebase_options.dart
-    - run: touch ./android/app/google-services.json
-    - run: echo ${{secrets.GOOGLE_SERVICES_ANDROID}} > ./android/app/google-services.json
 
 
     - uses: actions/checkout@v3
