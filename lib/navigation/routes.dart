@@ -3,5 +3,4 @@ class RouteNames {
   static const task = "task";
   static const newTask = "newTask";
   static const newTaskLw = 'newtask';
-
 }

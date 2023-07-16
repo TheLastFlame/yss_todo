@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:yss_todo/constants.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/domain/models/resstatuses.dart';
 import 'package:yss_todo/helpers.dart';
@@ -82,37 +83,46 @@ class _HomepageState extends State<Homepage> {
     logger.i('Home page opening');
 
     final screenThird = MediaQuery.sizeOf(context).height / 3;
+    final bool isTablet = MediaQuery.sizeOf(context).width >= minTabletWidth;
 
     return Scaffold(
       body: Stack(
         children: [
-          NotificationListener<ScrollMetricsNotification>(
-            onNotification: (notification) {
-              runInAction(() => controller.appBarExpandProcent.value = min(
-                  controller.scrollControl.offset / (screenThird - 56) * 100,
-                  100));
-              // 56 - высота свёрнутого аппбара
-              return true;
-            },
-            child: RefreshIndicator(
-              onRefresh: () async => controller.synchronization(),
-              child: CustomScrollView(
-                controller: controller.scrollControl,
-                physics: const AlwaysScrollableScrollPhysics(),
-                slivers: [
-                  const HomeAppBar(),
-                  const TaskList(),
-
-                  //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
-                  // 48 - высота FAB + 16 - высота отступа снизу + 16 - сверху + bottom navigation
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                        height: 70 +
-                            MediaQuery.systemGestureInsetsOf(context).bottom),
-                  )
-                ],
+          Row(
+            children: [
+              if (isTablet) 
+              Expanded(child: Container()),
+              Expanded(
+                child: NotificationListener<ScrollMetricsNotification>(
+                  onNotification: (notification) {
+                    runInAction(() => controller.appBarExpandProcent.value = min(
+                        controller.scrollControl.offset / (screenThird - 56) * 100,
+                        100));
+                    // 56 - высота свёрнутого аппбара
+                    return true;
+                  },
+                  child: RefreshIndicator(
+                    onRefresh: () async => controller.synchronization(),
+                    child: CustomScrollView(
+                      controller: controller.scrollControl,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      slivers: [
+                        const HomeAppBar(),
+                        const TaskList(),
+              
+                        //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
+                        // 48 - высота FAB + 16 - высота отступа снизу + 16 - сверху + bottom navigation
+                        SliverToBoxAdapter(
+                          child: SizedBox(
+                              height: 70 +
+                                  MediaQuery.systemGestureInsetsOf(context).bottom),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           const Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

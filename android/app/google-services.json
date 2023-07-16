@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "549789374883",
+    "project_id": "yss-todo",
+    "storage_bucket": "yss-todo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549789374883:android:b11c225283451ba8f36216",
+        "android_client_info": {
+          "package_name": "com.example.yss_todo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549789374883-5vhbrlklk9mdg5ud9saabutqrsajpio3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsWKNY7Zddz65LfHKWsr6bBLrJI13Xz7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549789374883-5vhbrlklk9mdg5ud9saabutqrsajpio3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
