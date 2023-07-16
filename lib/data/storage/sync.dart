@@ -11,7 +11,7 @@ abstract interface class SyncStorage {
 }
 
 class SyncStorageGetStorage implements SyncStorage {
-  var _syncStorage = GetStorage('SyncStorage');
+  final _syncStorage = GetStorage('SyncStorage');
 
   @override
   Future<bool> getSyncStatus() async {
@@ -49,7 +49,7 @@ class SyncStorageGetStorage implements SyncStorage {
     setSyncStatus(status);
   }
 
-  Future<SyncStorageGetStorage> init() async {
+    static Future<SyncStorageGetStorage> init() async {
     await GetStorage.init('SyncStorage');
     return SyncStorageGetStorage();
   }

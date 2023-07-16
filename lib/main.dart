@@ -13,19 +13,12 @@ import 'i18n/strings.g.dart';
 import 'navigation/route_information_parser.dart';
 import 'navigation/router_delegate.dart';
 
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
-
 void main() async {
   logger.i(
     'initialize the binding between the Flutter framework and the host platform',
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
 
   logger.i('Getting the system locale');
   LocaleSettings.useDeviceLocale();
@@ -35,7 +28,8 @@ void main() async {
   logger.i('Storage initialization');
   // await GetStorage.init('Settings');
   GetIt.I.registerSingleton<TaskListDB>(await TaskListDBGetStorage.init());
-  GetIt.I.registerSingleton<SyncStorage>(await SyncStorageGetStorage().init());
+  GetIt.I.registerSingleton<SyncStorage>(await SyncStorageGetStorage.init());
+
 
   logger.i('Controllers registration');
   GetIt.I.registerSingleton<MainController>(await MainController.init());
