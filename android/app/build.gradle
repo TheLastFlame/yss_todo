@@ -62,6 +62,23 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    
+    flavorDimensions "default"
+
+    productFlavors {
+        normal {
+            dimension "default"
+            resValue "string", "appNameFlavor", "yss_todo"
+            applicationIdSuffix ""
+        }
+
+        dev {
+            dimension "default"
+            resValue "string", "appNameFlavor", "yss_todo [dev]"
+            applicationIdSuffix ".dev"
+
+        }
+    }
 }
 
 flutter {
