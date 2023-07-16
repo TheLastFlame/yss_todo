@@ -5,19 +5,16 @@ on:
 
 jobs:
   build:
-    runs-on: macos-11
+    runs-on: ubuntu-latest
     steps:
     - name: Firebase config
-      run: touch -c ./lib/firebase_options.dart
-    - env:
-        OPTIONS: ${{secrets.FIREBASE_OPTIONS}}
-      run: |
-        echo $OPTIONS > ./lib/firebase_options.dart
-
-    - run: touch -c ./android/app/google-services.json
-    - run: echo ${{secrets.GOOGLE_SERVICES_ANDROID}} > ./android/app/google-services.json
-
-
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          fs.writeFileSync('./lib/firebase_options.dart', ${{secrets.FIREBASE_OPTIONS}});
+          fs.writeFileSync('./android/app/google-services.json', ${{secrets.GOOGLE_SERVICES_ANDROID}});
 
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v2
