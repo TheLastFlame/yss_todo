@@ -30,7 +30,7 @@ class LandscapeHomeAppBar extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Card(
-                  // elevation: 0,
+                  elevation: 2,
                   child: Row(
                     children: [
                       const SizedBox(width: appPadding*2),
