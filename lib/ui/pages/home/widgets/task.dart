@@ -10,6 +10,7 @@ import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/domain/models/priority.dart';
 import 'package:yss_todo/domain/models/task.dart';
+import 'package:yss_todo/navigation/navigation.dart';
 import 'package:yss_todo/navigation/router_delegate.dart';
 
 import '../../../../i18n/strings.g.dart';
@@ -109,7 +110,7 @@ class TaskTile extends StatelessWidget {
               ? const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(13)))
               : null,
-          onTap: () => GetIt.I<MyRouterDelegate>().showTaskPage(task.id),
+          onTap: () => GetIt.I<Nav>().showTaskPage(task.id),
 
           // Изменение афигеннейших, просто лучших отступов, которые ска разные на разных платформах (гении, лять)
           visualDensity: const VisualDensity(horizontal: -4, vertical: -4),

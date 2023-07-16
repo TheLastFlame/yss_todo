@@ -5,6 +5,7 @@ import 'package:yss_todo/logger.dart';
 import 'constants.dart';
 import 'domain/models/task.dart';
 import 'i18n/strings.g.dart';
+import 'navigation/navigation.dart';
 import 'ui/pages/task/taskinfo_portrait.dart';
 
 double lerp(start, end, procent) => start + (end - start) * procent / 100;
@@ -39,13 +40,13 @@ Future<bool> confirm(context) async {
       title: Text(t.commonwords.confirmation),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => GetIt.I<Nav>().pop(context),
           child: Text(t.commonwords.cancel),
         ),
         FilledButton(
           onPressed: () {
             result = true;
-            Navigator.of(context).pop();
+            GetIt.I<Nav>().pop(context);
           },
           child: Text(t.commonwords.confirm),
         ),

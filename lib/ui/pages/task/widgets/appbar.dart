@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:yss_todo/domain/controllers/task.dart';
 
 import '../../../../constants.dart';
 import '../../../../i18n/strings.g.dart';
+import '../../../../navigation/navigation.dart';
 
 class TaskAppBar extends StatelessWidget {
   const TaskAppBar({
@@ -18,7 +20,7 @@ class TaskAppBar extends StatelessWidget {
       forceMaterialTransparency: true,
       automaticallyImplyLeading: false,
       leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => GetIt.I<Nav>().pop(context),
           icon: const Icon(Icons.close)),
       title: Text(t.taskpage.task),
       leadingWidth: 56 + appPadding * 3,
@@ -29,7 +31,7 @@ class TaskAppBar extends StatelessWidget {
           child: TextButton(
             key: const ValueKey('SaveBtn'),
               onPressed: () {
-                Navigator.pop(context);
+                GetIt.I<Nav>().pop(context);
                 controller.saveData();
               },
               child: Text(t.taskpage.save)),

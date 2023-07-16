@@ -9,6 +9,7 @@ import 'package:yss_todo/data/storage/tasklist.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/domain/controllers/main.dart';
 import 'package:yss_todo/logger.dart';
+import 'package:yss_todo/navigation/navigation.dart';
 
 import 'firebase_options.dart';
 import 'i18n/strings.g.dart';
@@ -40,7 +41,7 @@ void main() async {
   GetIt.I.registerSingleton<MainController>(await MainController.init());
   GetIt.I.registerSingleton<TasksAPI>(await TasksAPI.init());
   GetIt.I.registerSingleton<HomeController>(await HomeController.init());
-  GetIt.I.registerSingleton<MyRouterDelegate>(MyRouterDelegate());
+  GetIt.I.registerSingleton<Nav>(MyRouterDelegate());
 
   runApp(TranslationProvider(child: MainApp()));
 }
@@ -74,7 +75,7 @@ class MainApp extends StatelessWidget {
       locale: TranslationProvider.of(context).flutterLocale,
       supportedLocales: AppLocaleUtils.supportedLocales,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      routerDelegate: GetIt.I<MyRouterDelegate>(),
+      routerDelegate: MyRouterDelegate(),
       routeInformationParser: parser,
     );
   }

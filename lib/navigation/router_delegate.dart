@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:yss_todo/navigation/fade_transition_page.dart';
+import 'package:yss_todo/navigation/navigation.dart';
 import 'package:yss_todo/ui/pages/home/home.dart';
 import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 
 import 'navigation_state.dart';
 
 class MyRouterDelegate extends RouterDelegate<NavigationState>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<NavigationState> {
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<NavigationState> implements Nav {
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
@@ -50,8 +51,13 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
     notifyListeners();
   }
 
+  @override
   void showTaskPage(String taskId) {
     state = NavigationState.task(taskId);
     notifyListeners();
+  }
+  @override
+  void pop(BuildContext context) {
+    Navigator.pop(context);
   }
 }
