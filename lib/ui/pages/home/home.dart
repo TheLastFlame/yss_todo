@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -8,11 +7,11 @@ import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/domain/models/resstatuses.dart';
 import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/logger.dart';
-import 'package:yss_todo/ui/pages/home/widgets/appbar.dart';
+import 'package:yss_todo/ui/pages/home/home_landscape.dart';
 import 'package:yss_todo/ui/pages/home/widgets/syncindicator.dart';
-import 'package:yss_todo/ui/pages/home/widgets/tasklist.dart';
 
 import '../../../i18n/strings.g.dart';
+import 'home_portrait.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -81,39 +80,12 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     logger.i('Home page opening');
 
-    final screenThird = MediaQuery.sizeOf(context).height / 3;
-
     return Scaffold(
       body: Stack(
         children: [
-          NotificationListener<ScrollMetricsNotification>(
-            onNotification: (notification) {
-              runInAction(() => controller.appBarExpandProcent.value = min(
-                  controller.scrollControl.offset / (screenThird - 56) * 100,
-                  100));
-              // 56 - высота свёрнутого аппбара
-              return true;
-            },
-            child: RefreshIndicator(
-              onRefresh: () async => controller.synchronization(),
-              child: CustomScrollView(
-                controller: controller.scrollControl,
-                physics: const AlwaysScrollableScrollPhysics(),
-                slivers: [
-                  const HomeAppBar(),
-                  const TaskList(),
-
-                  //Свободное место под размер FAB, чтобы он не перекрывал нижние элементы
-                  // 48 - высота FAB + 16 - высота отступа снизу + 16 - сверху + bottom navigation
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                        height: 70 +
-                            MediaQuery.systemGestureInsetsOf(context).bottom),
-                  )
-                ],
-              ),
-            ),
-          ),
+          isTablet(context)
+              ? HomePageLandscape(controller: controller)
+              : HomePagePortrait(controller: controller),
           const Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

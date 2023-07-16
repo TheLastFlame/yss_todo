@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/logger.dart';
-import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 import 'constants.dart';
 import 'domain/models/task.dart';
 import 'i18n/strings.g.dart';
+import 'ui/pages/task/taskinfo_portrait.dart';
 
 double lerp(start, end, procent) => start + (end - start) * procent / 100;
 
@@ -77,7 +77,7 @@ void taskCreatingDialog(context) {
               const Flexible(
                 child: ClipRRect(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                  child: TaskPage(),
+                  child: TaskPagePortrait(),
                 ),
               ),
               SizedBox(
@@ -89,4 +89,9 @@ void taskCreatingDialog(context) {
       );
     },
   );
+}
+
+bool isTablet(context) {
+  return MediaQuery.sizeOf(context).width >= minTabletWidth &&
+      MediaQuery.orientationOf(context) == Orientation.landscape;
 }

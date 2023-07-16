@@ -15,6 +15,7 @@ class TaskAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      forceMaterialTransparency: true,
       automaticallyImplyLeading: false,
       leading: IconButton(
           onPressed: () => Navigator.pop(context),

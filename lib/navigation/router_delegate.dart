@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yss_todo/navigation/fade_transition_page.dart';
 import 'package:yss_todo/ui/pages/home/home.dart';
 import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 
@@ -25,7 +26,7 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
       pages: [
         const MaterialPage(child: Homepage()),
         if (state?.isTaskPage == true)
-          MaterialPage(
+          FadePage(
             child: TaskPage(taskId: state?.selectedTaskId),
           ),
         if (state?.isNewTaskPage == true) const MaterialPage(child: TaskPage()),
