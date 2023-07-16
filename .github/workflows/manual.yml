@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    name: Build android on Mac OS
-    runs-on: macos-11
+    name: Build
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
@@ -33,7 +33,20 @@ jobs:
       - run: flutter build apk --dart-define HOST=${{ secrets.HOST }} --dart-define TOKEN=${{ secrets.TOKEN }} --flavor normal --target lib/main.dart --dart-define API_KEY=${{ secrets.FIRE_API_KEY }} --dart-define APP_ID=${{ secrets.FIRE_APP_ID }} --dart-define MESSAGING_SENDER_ID=${{ secrets.FIRE_M_SENDER_ID }}
       - run: flutter build apk --split-per-abi --dart-define HOST=${{ secrets.HOST }}  --dart-define TOKEN=${{ secrets.TOKEN }} --flavor normal --target lib/main.dart --dart-define API_KEY=${{ secrets.FIRE_API_KEY }} --dart-define APP_ID=${{ secrets.FIRE_APP_ID }} --dart-define MESSAGING_SENDER_ID=${{ secrets.FIRE_M_SENDER_ID }}
 
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: universal
+          path: build/app/outputs/flutter-apk/app-normal-release.apk
       - uses: actions/upload-artifact@v3
         with:
           name: arm-v8a
-          path: build/app/outputs/flutter-apk
+          path: build/app/outputs/flutter-apk/app-arm64-v8a-normal-release.apk
+      - uses: actions/upload-artifact@v3
+        with:
+          name: arm-v7a
+          path: build/app/outputs/flutter-apk/app-armeabi-v7a-normal-release.apk
+      - uses: actions/upload-artifact@v3
+        with:
+          name: x86-64
+          path: build/app/outputs/flutter-apk/app-x86_64-normal-release.apk
