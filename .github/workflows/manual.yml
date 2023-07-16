@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Firebase config
-      run: echo ${{secrets.FIREBASE_OPTIONS}} > lib/firebase_options.dart
+      run: touch lib/firebase_options.dart
+    - run: echo ${{secrets.FIREBASE_OPTIONS}} > lib/firebase_options.dart
+    - run: touch android/app/google-services.json
     - run: echo ${{secrets.GOOGLE_SERVICES_ANDROID}} > android/app/google-services.json
 
 
