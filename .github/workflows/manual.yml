@@ -13,9 +13,9 @@ jobs:
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          channel: beta
       - name: Set up JDK 11
-        uses: actions/setup-java@5ffc13f4174014e2d4d4572b3d74c3fa61aeb2c2 # v3.10.5
+        uses: actions/setup-java@v2
         with:
           java-version: 11
           distribution: temurin
@@ -41,3 +41,8 @@ jobs:
       - run: flutter pub get
       - run: flutter build apk --dart-define HOST= ${{ secrets.HOST }} --dart-define TOKEN= ${{ secrets.TOKEN }} --flavor normal --target lib/main.dart
       - run: flutter build apk --split-per-abi --dart-define HOST= ${{ secrets.HOST }} --dart-define TOKEN= ${{ secrets.TOKEN }} --flavor normal --target lib/main.dart
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: arm-v8a
+          path: build/app/outputs/flutter-apk
