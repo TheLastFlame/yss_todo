@@ -49,7 +49,7 @@ class SyncStorageGetStorage implements SyncStorage {
     setSyncStatus(status);
   }
 
-    static Future<SyncStorageGetStorage> init() async {
+  static Future<SyncStorageGetStorage> init() async {
     await GetStorage.init('SyncStorage');
     return SyncStorageGetStorage();
   }

@@ -8,7 +8,8 @@ import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 import 'navigation_state.dart';
 
 class MyRouterDelegate extends RouterDelegate<NavigationState>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<NavigationState> implements Nav {
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<NavigationState>
+    implements Nav {
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
@@ -58,6 +59,7 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
     // sendEvent('opening_task_page');
     notifyListeners();
   }
+
   @override
   void pop(BuildContext context) {
     sendEvent('pop');

@@ -33,7 +33,7 @@ class LandscapeHomeAppBar extends StatelessWidget {
                   elevation: 2,
                   child: Row(
                     children: [
-                      const SizedBox(width: appPadding*2),
+                      const SizedBox(width: appPadding * 2),
                       Text(
                         '${t.homepage.done}: ${GetIt.I<HomeController>().taskList.where((e) => e.done.value).length}',
                       ),

@@ -20,7 +20,8 @@ class HomePageLandscape extends StatelessWidget {
             child: Column(
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(left: appPadding, top: appPadding/2),
+                  padding:
+                      EdgeInsets.only(left: appPadding, top: appPadding / 2),
                   child: LandscapeHomeAppBar(),
                 ),
                 Expanded(

@@ -16,8 +16,7 @@ class SyncIndicator extends StatelessWidget {
       builder: (_) {
         return AnimatedContainer(
           duration: animationsDuration,
-          height:
-              GetIt.I<HomeController>().isLoading.value ? 1 : 0,
+          height: GetIt.I<HomeController>().isLoading.value ? 1 : 0,
           child: const LinearProgressIndicator(),
         );
       },

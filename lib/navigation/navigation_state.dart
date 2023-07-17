@@ -17,6 +17,5 @@ class NavigationState {
       : _new = true,
         selectedTaskId = null;
 
-  NavigationState.task(this.selectedTaskId)
-      : _new = false;
+  NavigationState.task(this.selectedTaskId) : _new = false;
 }

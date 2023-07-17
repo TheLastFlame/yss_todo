@@ -32,9 +32,9 @@ class MyRouteInformationParser extends RouteInformationParser<NavigationState> {
     }
 
     if (configuration.isNewTaskPage) {
-      return RouteInformation(location: '/newTask');
+      return const RouteInformation(location: '/newTask');
     }
 
-    return RouteInformation(location: '/');
+    return const RouteInformation(location: '/');
   }
 }

@@ -11,15 +11,16 @@ import 'package:yss_todo/ui/pages/task/widgets/taskdeletebtn.dart';
 
 import '../../../domain/controllers/home.dart';
 import '../../../i18n/strings.g.dart';
+
 class TaskPagePortrait extends StatelessWidget {
   const TaskPagePortrait({super.key, this.taskId});
 
-  final String? taskId; 
+  final String? taskId;
 
   @override
   Widget build(BuildContext context) {
     logger.i('Opening the task page');
-        
+
     var task = taskId != null
         ? GetIt.I<HomeController>()
             .taskList
@@ -67,7 +68,7 @@ class TaskPagePortrait extends StatelessWidget {
                   const Divider(height: 0),
                   // Выбор сроков
                   DueDatePicker(controller: controller),
-                  
+
                   // Если это страница существующего таска отображаем кнопку удаления
                   if (taskId != null) const Divider(height: 0),
                   if (taskId != null) TaskDeleteButton(model: task),

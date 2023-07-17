@@ -98,6 +98,6 @@ bool isTablet(context) {
       MediaQuery.orientationOf(context) == Orientation.landscape;
 }
 
-void sendEvent (String event) {
+void sendEvent(String event) {
   FirebaseAnalytics.instance.logEvent(name: event);
 }

@@ -15,7 +15,6 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final appBarExpandProcent = GetIt.I<HomeController>().appBarExpandProcent;
 
     return Observer(

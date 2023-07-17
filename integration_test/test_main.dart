@@ -29,5 +29,5 @@ Future main() async {
   GetIt.I.registerSingleton<HomeController>(await HomeController.init());
   GetIt.I.registerSingleton<MyRouterDelegate>(MyRouterDelegate());
 
-   runApp(TranslationProvider(child: MainApp()));
+  runApp(TranslationProvider(child: MainApp()));
 }

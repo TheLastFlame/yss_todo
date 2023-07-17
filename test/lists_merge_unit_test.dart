@@ -28,12 +28,11 @@ void main() {
       }
     });
 
-    test ('standart merge test', () {
-            var list = mergeLists(list1, list2, removeList2);
+    test('standart merge test', () {
+      var list = mergeLists(list1, list2, removeList2);
       for (int i = 0; i < list.length; i++) {
         expect(list[i].changedAt, list4[i].changedAt);
       }
-
     });
   });
 }
