@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:yss_todo/logger.dart';
 
 Future<String> _getId() async {
@@ -29,6 +32,7 @@ Future<String> _getId() async {
 
 class MainController {
   late final String deviceId;
+  var primaryColor = Observable<Color?>(null);
 
   static void _initCrashlytics() {
     FlutterError.onError = (errorDetails) {
@@ -49,6 +53,35 @@ class MainController {
 
   static Future<MainController> init({bool isTest = false}) async {
     var controller = MainController._init();
+
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval: const Duration(hours: 1),
+    ));
+
+    await remoteConfig.fetchAndActivate();
+    final color = int.tryParse(
+      remoteConfig.getString('color').substring(1),
+      radix: 16,
+    );
+    runInAction(
+      () => controller.primaryColor.value = color != null ? Color(color) : null,
+    );
+
+    remoteConfig.onConfigUpdated.listen((event) async {
+      await remoteConfig.activate();
+      logger.i(remoteConfig.getString('color'));
+      final color = int.tryParse(
+        remoteConfig.getString('color').substring(1),
+        radix: 16,
+      );
+      runInAction(
+        () =>
+            controller.primaryColor.value = color != null ? Color(color) : null,
+      );
+    });
+
     controller.deviceId = isTest ? 'test' : await _getId();
     return controller;
   }

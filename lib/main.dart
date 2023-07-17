@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/data/api/api.dart';
 import 'package:yss_todo/data/storage/sync.dart';
@@ -24,6 +25,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
+    name: "yss_todo",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -65,18 +67,27 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     logger.i('The application has been started');
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
+    return Observer(builder: (_) {
+      return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
 
-      theme: ThemeData(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true),
+        theme: ThemeData(
+          useMaterial3: true,
+          colorSchemeSeed: GetIt.I<MainController>().primaryColor.value,
+        ),
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.dark,
+          colorSchemeSeed: GetIt.I<MainController>().primaryColor.value,
+        ),
 
-      // set up localization
-      locale: TranslationProvider.of(context).flutterLocale,
-      supportedLocales: AppLocaleUtils.supportedLocales,
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      routerDelegate: GetIt.I<Nav>() as MyRouterDelegate,
-      routeInformationParser: parser,
-    );
+        // set up localization
+        locale: TranslationProvider.of(context).flutterLocale,
+        supportedLocales: AppLocaleUtils.supportedLocales,
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        routerDelegate: GetIt.I<Nav>() as MyRouterDelegate,
+        routeInformationParser: parser,
+      );
+    });
   }
 }
