@@ -67,7 +67,7 @@ jobs:
           uses: wzieba/Firebase-Distribution-Github-Action@v1
           with:
             appId: ${{ secrets.FIRE_APP_ID }}
-            token: ${{ secrets.TOKEN }}
+            serviceCredentialsFileContent: ${{ secrets.FIRE_CREDENTIAL_FILE }}
             groups: android_testers
             file: app-arm64-v8a-normal-release.apk
 
