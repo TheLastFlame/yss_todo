@@ -53,9 +53,9 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAsWKNY7Zddz65LfHKWsr6bBLrJI13Xz7Y',
-    appId: '1:549789374883:android:3780d38c949b4e33f36216',
-    messagingSenderId: '549789374883',
+    apiKey: String.fromEnvironment('API_KEY'),
+    appId: String.fromEnvironment('APP_ID'),
+    messagingSenderId: String.fromEnvironment('MESSAGING_SENDER_ID'),
     projectId: 'yss-todo',
     storageBucket: 'yss-todo.appspot.com',
   );
