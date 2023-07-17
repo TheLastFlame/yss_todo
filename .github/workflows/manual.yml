@@ -15,7 +15,7 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: flutter analyze --no-fatal-infos --no-fatal-warnings 
-  format:
+  formater:
     name: Formating
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -28,6 +28,7 @@ jobs:
       - run: flutter pub get
       - run: dart format --set-exit-if-changed .
   build:
+    needs: [linter, formater]
     name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 10
