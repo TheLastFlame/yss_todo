@@ -25,7 +25,7 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
 
   logger.i('Getting the system locale');
   LocaleSettings.useDeviceLocale();
@@ -75,7 +75,7 @@ class MainApp extends StatelessWidget {
       locale: TranslationProvider.of(context).flutterLocale,
       supportedLocales: AppLocaleUtils.supportedLocales,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      routerDelegate: MyRouterDelegate(),
+      routerDelegate: GetIt.I<Nav>() as MyRouterDelegate,
       routeInformationParser: parser,
     );
   }
