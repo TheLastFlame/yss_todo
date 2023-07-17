@@ -7,7 +7,7 @@ class MyRouteInformationParser extends RouteInformationParser<NavigationState> {
   @override
   Future<NavigationState> parseRouteInformation(
       RouteInformation routeInformation) async {
-    final uri = routeInformation.uri;
+    final uri = Uri.parse(routeInformation.location ?? '');
 
     if (uri.pathSegments.isEmpty) {
       return NavigationState.root();
@@ -27,14 +27,14 @@ class MyRouteInformationParser extends RouteInformationParser<NavigationState> {
   RouteInformation? restoreRouteInformation(NavigationState configuration) {
     if (configuration.isTaskPage) {
       return RouteInformation(
-        uri: Uri.parse('/task/${configuration.selectedTaskId}'),
+        location: '/task/${configuration.selectedTaskId}',
       );
     }
 
     if (configuration.isNewTaskPage) {
-      return RouteInformation(uri: Uri.parse('/newTask'));
+      return RouteInformation(location: '/newTask');
     }
 
-    return RouteInformation(uri: Uri.parse('/'));
+    return RouteInformation(location: '/');
   }
 }

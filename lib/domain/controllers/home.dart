@@ -86,6 +86,8 @@ class HomeController {
       });
     }
 
+    sendEvent('event_removing');
+
     runInAction(() => isLoading.value = false);
   }
 
@@ -103,8 +105,10 @@ class HomeController {
           animationsDuration * 2,
           () => scrollControl.animateTo(scrollControl.position.maxScrollExtent,
               duration: animationsDuration, curve: Curves.linear));
+      sendEvent('event_creating');
       res = await _api.addTask(task);
     } else {
+      sendEvent('event_editing');
       res = await _api.editTask(task);
     }
     if (res != ResponseStatus.normal) {
@@ -118,6 +122,7 @@ class HomeController {
     logger.i(
       'Change task ${task.id} status to ${!task.done.value}',
     );
+    sendEvent('event_completion');
     task.done.toggle();
     saveTask(task);
   }

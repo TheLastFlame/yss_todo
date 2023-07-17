@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/navigation/fade_transition_page.dart';
 import 'package:yss_todo/navigation/navigation.dart';
 import 'package:yss_todo/ui/pages/home/home.dart';
@@ -54,10 +55,12 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
   @override
   void showTaskPage(String taskId) {
     state = NavigationState.task(taskId);
+    // sendEvent('opening_task_page');
     notifyListeners();
   }
   @override
   void pop(BuildContext context) {
+    sendEvent('pop');
     Navigator.pop(context);
   }
 }

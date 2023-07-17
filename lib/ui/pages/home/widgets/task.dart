@@ -11,7 +11,6 @@ import 'package:yss_todo/helpers.dart';
 import 'package:yss_todo/domain/models/priority.dart';
 import 'package:yss_todo/domain/models/task.dart';
 import 'package:yss_todo/navigation/navigation.dart';
-import 'package:yss_todo/navigation/router_delegate.dart';
 
 import '../../../../i18n/strings.g.dart';
 
@@ -163,7 +162,7 @@ class TaskTile extends StatelessWidget {
           // Иконка информации
           trailing: IconButton(
             icon: const Icon(Icons.info_outline),
-            onPressed: () => GetIt.I<MyRouterDelegate>().showTaskPage(task.id),
+            onPressed: () => GetIt.I<Nav>().showTaskPage(task.id),
           ),
           subtitle: task.deadline.value != null
               ? Text(

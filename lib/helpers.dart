@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
@@ -95,4 +96,8 @@ void taskCreatingDialog(context) {
 bool isTablet(context) {
   return MediaQuery.sizeOf(context).width >= minTabletWidth &&
       MediaQuery.orientationOf(context) == Orientation.landscape;
+}
+
+void sendEvent (String event) {
+  FirebaseAnalytics.instance.logEvent(name: event);
 }
