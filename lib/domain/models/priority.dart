@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../i18n/strings.g.dart';
 
-enum Priority {
-  low,
-  basic,
-  important
-}
+enum Priority { low, basic, important }
 
 extension PriorityExtension on Priority {
   String get name {
@@ -19,6 +15,7 @@ extension PriorityExtension on Priority {
         return t.taskpage.hight;
     }
   }
+
   IconData get icon {
     switch (this) {
       case Priority.low:
@@ -29,6 +26,7 @@ extension PriorityExtension on Priority {
         return Icons.warning_amber_rounded;
     }
   }
+
   Color? get color {
     switch (this) {
       case Priority.important:

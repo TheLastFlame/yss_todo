@@ -6,6 +6,7 @@ import '../../../../domain/controllers/home.dart';
 import '../../../../helpers.dart';
 import '../../../../i18n/strings.g.dart';
 import '../../../../domain/models/task.dart';
+import '../../../../navigation/navigation.dart';
 
 class TaskDeleteButton extends StatelessWidget {
   const TaskDeleteButton({
@@ -26,7 +27,7 @@ class TaskDeleteButton extends StatelessWidget {
         onTap: () => confirm(context).then(
           (value) {
             if (value) {
-              Navigator.of(context).pop();
+              GetIt.I<Nav>().pop(context);
               GetIt.I<HomeController>().removeTask(model.id);
             }
           },

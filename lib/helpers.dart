@@ -1,12 +1,35 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yss_todo/domain/controllers/home.dart';
 import 'package:yss_todo/logger.dart';
-import 'package:yss_todo/ui/pages/task/taskinfo.dart';
 import 'constants.dart';
+import 'domain/models/task.dart';
 import 'i18n/strings.g.dart';
+import 'navigation/navigation.dart';
+import 'ui/pages/task/taskinfo_portrait.dart';
 
 double lerp(start, end, procent) => start + (end - start) * procent / 100;
+
+// мердж трёх списков
+List<TaskModel> mergeLists(List<TaskModel> list1, List<TaskModel> list2,
+    Map<String, DateTime> removeList) {
+  final Map<String, TaskModel> map = {};
+
+  for (final task in list1 + list2) {
+    if (removeList.containsKey(task.id)) {
+      if (task.changedAt!.isBefore(removeList[task.id]!)) continue;
+    }
+
+    if (map.containsKey(task.id)) {
+      if (task.changedAt!.isBefore(map[task.id]!.changedAt!)) continue;
+    }
+
+    map[task.id] = task;
+  }
+
+  return map.values.toList();
+}
 
 // Вызывает диалог подтверждения
 Future<bool> confirm(context) async {
@@ -18,13 +41,13 @@ Future<bool> confirm(context) async {
       title: Text(t.commonwords.confirmation),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => GetIt.I<Nav>().pop(context),
           child: Text(t.commonwords.cancel),
         ),
-        FilledButton  (
+        FilledButton(
           onPressed: () {
             result = true;
-            Navigator.of(context).pop();
+            GetIt.I<Nav>().pop(context);
           },
           child: Text(t.commonwords.confirm),
         ),
@@ -56,7 +79,7 @@ void taskCreatingDialog(context) {
               const Flexible(
                 child: ClipRRect(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                  child: TaskPage(),
+                  child: TaskPagePortrait(),
                 ),
               ),
               SizedBox(
@@ -68,4 +91,13 @@ void taskCreatingDialog(context) {
       );
     },
   );
+}
+
+bool isTablet(context) {
+  return MediaQuery.sizeOf(context).width >= minTabletWidth &&
+      MediaQuery.orientationOf(context) == Orientation.landscape;
+}
+
+void sendEvent(String event) {
+  FirebaseAnalytics.instance.logEvent(name: event);
 }

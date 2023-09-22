@@ -24,8 +24,7 @@ class TaskList extends StatelessWidget {
             // выборка заданий для отображение
             var list = Computed(() => controller.taskList
                 .where((el) =>
-                    controller.isComplitedVisible.value ||
-                    !el.done.value)
+                    controller.isComplitedVisible.value || !el.done.value)
                 .toList());
             return Column(
               children: [
@@ -37,10 +36,8 @@ class TaskList extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: list.value.length,
-                    itemBuilder: (context, index) => Task(
-                      list.value[index],
-                      first: index == 0
-                    ),
+                    itemBuilder: (context, index) =>
+                        Task(list.value[index], first: index == 0),
                   ),
                 ),
                 // Разделитель списка задач и кнопки добавить
@@ -53,8 +50,7 @@ class TaskList extends StatelessWidget {
                     //Скругление при отсутствии задач
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(
-                              list.value.isEmpty ? 13 : 0),
+                          top: Radius.circular(list.value.isEmpty ? 13 : 0),
                           bottom: const Radius.circular(13)),
                     ),
                     onTap: () => taskCreatingDialog(context),
